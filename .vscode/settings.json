@@ -1,4 +1,5 @@
 {
     "python.formatting.provider": "black",
-    "python.pythonPath": "/Users/panos/.local/share/virtualenvs/pvmeasurements-S_PsPQ6m/bin/python"
+    "python.pythonPath": "/Users/panos/.local/share/virtualenvs/pvmeasurements-S_PsPQ6m/bin/python",
+    "git.ignoreLimitWarning": true
 }
