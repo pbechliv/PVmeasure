@@ -1,13 +1,38 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import { BrowserRouter } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import ReduxToastr from "react-redux-toastr";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import reducer from "./store/reducer";
+import thunk from "redux-thunk";
 
-const app = <App />;
+export const HOST_URL = "http://localhost:8000";
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
+const app = (
+  <Provider store={store}>
+    <>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+      <ReduxToastr
+        timeOut={5000}
+        newestOnTop={false}
+        position="top-right"
+        transitionIn="bounceIn"
+        transitionOut="bounceOut"
+        progressBar
+        closeOnToastrClick
+      />
+    </>
+  </Provider>
+);
 
 ReactDOM.render(app, document.getElementById("root"));
 
