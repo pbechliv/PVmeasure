@@ -7,12 +7,7 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-const app = (
-  <BrowserRouter>
-    <App />
-    <ToastContainer />
-  </BrowserRouter>
-);
+const app = <App />;
 
 ReactDOM.render(app, document.getElementById("root"));
 
