@@ -1,5 +1,4 @@
 #!/bin/bash
 
 cd server
-source venv/bin/activate
-python manage.py runserver
+pipenv run python manage.py runserver
