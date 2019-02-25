@@ -4,12 +4,13 @@ import * as types from "./types";
 
 const INITIAL_STATE = {
   isAuthenticated: false,
-  user: null
+  userId: null
 };
 
 const setAuthStatus = (state, action) => ({
   ...state,
-  isAuthenticated: action.status
+  isAuthenticated: action.status,
+  userId: action.userId
 });
 
 const mainReducer = (state = INITIAL_STATE, action) => {

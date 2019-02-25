@@ -6,7 +6,7 @@ import { setFetchHeaders } from "../lib";
 const getTokenExpiration = token => {
   const splitToken = token.split(".");
   const parsedToken = JSON.parse(base64url.decode(splitToken[1]));
-  return parsedToken.exp;
+  return { exp: parsedToken.exp, userId: parsedToken.user_id };
 };
 
 export const fetchTokenPair = (username, password) => async dispatch => {
@@ -20,11 +20,12 @@ export const fetchTokenPair = (username, password) => async dispatch => {
     if (responseData.access && responseData.refresh) {
       localStorage.setItem("accessToken", responseData.access);
       localStorage.setItem("refreshToken", responseData.refresh);
-      const accessExp = getTokenExpiration(responseData.access);
+      const parsedToken = getTokenExpiration(responseData.access);
+
       setTimeout(() => {
         refreshTokens();
-      }, accessExp * 1000 - Date.now());
-      await dispatch(actions.setAuthStatus(true));
+      }, parsedToken.exp * 1000 - Date.now());
+      await dispatch(actions.setAuthStatus(true, parsedToken.userId));
     } else {
       dispatch(actions.setAuthStatus(false));
     }
@@ -44,16 +45,16 @@ const refreshTokens = async () => {
     if (responseData.access) {
       localStorage.setItem("accessToken", responseData.access);
       localStorage.setItem("refreshToken", responseData.refresh);
-      const accessExp = getTokenExpiration(responseData.access);
+      const parsedAccess = getTokenExpiration(responseData.access);
       setTimeout(() => {
         refreshTokens();
-      }, accessExp * 1000 - Date.now());
-      const refreshExp = getTokenExpiration(responseData.refresh);
+      }, parsedAccess.exp * 1000 - Date.now());
+      const parsedRefresh = getTokenExpiration(responseData.refresh);
       setTimeout(() => {
         if (localStorage.getItem("refreshToken") === responseData.refresh) {
           refreshTokens();
         }
-      }, refreshExp * 1000 - Date.now());
+      }, parsedRefresh.exp * 1000 - Date.now());
     }
   }
   return response;
@@ -62,23 +63,22 @@ const refreshTokens = async () => {
 export const readAuthToken = () => async dispatch => {
   let accessToken = localStorage.getItem("accessToken");
   if (accessToken) {
-    const accessExp = getTokenExpiration(accessToken);
-    console.log(accessExp * 1000 <= Date.now());
-    if (accessExp * 1000 <= Date.now()) {
-      const refreshExp = getTokenExpiration(
+    const parsedAccess = getTokenExpiration(accessToken);
+    if (parsedAccess.exp * 1000 <= Date.now()) {
+      const parsedRefresh = getTokenExpiration(
         localStorage.getItem("refreshToken")
       );
-      if (refreshExp * 1000 > Date.now()) {
+      if (parsedRefresh.exp * 1000 > Date.now()) {
         const response = await refreshTokens();
         if (response.ok) {
-          await dispatch(actions.setAuthStatus(true));
+          await dispatch(actions.setAuthStatus(true, parsedAccess.userId));
         }
       }
     } else {
-      await dispatch(actions.setAuthStatus(true));
+      await dispatch(actions.setAuthStatus(true, parsedAccess.userId));
       setTimeout(() => {
         refreshTokens();
-      }, accessExp * 1000 - Date.now());
+      }, parsedAccess.exp * 1000 - Date.now());
     }
   } else {
     dispatch(actions.setAuthStatus(false));

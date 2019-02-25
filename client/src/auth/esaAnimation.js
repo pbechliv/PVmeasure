@@ -1,5 +1,5 @@
-import { script1, script2 } from "./animationScripts";
-import * as THREE from "three";
+import { script1, script2 } from './animationScripts';
+import * as THREE from 'three';
 
 const SceneUtils = {
   createMultiMaterialObject: function(geometry, materials) {
@@ -56,11 +56,11 @@ export const startAnim = function() {
         });
         this.renderer.setClearColor(0xffffff);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.container = document.createElement("div");
-        this.container.id = "canvasGL";
+        this.container = document.createElement('div');
+        this.container.id = 'canvasGL';
         this.container.appendChild(this.renderer.domElement);
         this.camera.lookAt(new THREE.Vector3());
-        document.getElementById("bgr").appendChild(this.container);
+        document.getElementById('bgr').appendChild(this.container);
         this.terrain = new window.Terrain(this.scene);
         this.scene.add(this.terrain.plane_mesh);
         return this.update();
@@ -131,39 +131,39 @@ export const startAnim = function() {
       init() {
         this.uniforms = {
           time: {
-            type: "f",
+            type: 'f',
             value: 0.0
           },
           speed: {
-            type: "f",
+            type: 'f',
             value: this.options.speed
           },
           elevation: {
-            type: "f",
+            type: 'f',
             value: this.options.elevation
           },
           noise_range: {
-            type: "f",
+            type: 'f',
             value: this.options.noise_range
           },
           offset: {
-            type: "f",
+            type: 'f',
             value: this.options.elevation
           },
           perlin_passes: {
-            type: "f",
+            type: 'f',
             value: this.options.perlin_passes
           },
           sombrero_amplitude: {
-            type: "f",
+            type: 'f',
             value: this.options.sombrero_amplitude
           },
           sombrero_frequency: {
-            type: "f",
+            type: 'f',
             value: this.options.sombrero_frequency
           },
           line_color: {
-            type: "c",
+            type: 'c',
             value: new THREE.Color(this.options.wireframe_color)
           }
         };
@@ -171,12 +171,7 @@ export const startAnim = function() {
       }
 
       buildPlanes(segments) {
-        this.plane_geometry = new THREE.PlaneBufferGeometry(
-          20,
-          20,
-          segments,
-          segments
-        );
+        this.plane_geometry = new THREE.PlaneBufferGeometry(20, 20, segments, segments);
         this.plane_material = new THREE.ShaderMaterial({
           vertexShader: script1,
           fragmentShader: script2,
@@ -186,24 +181,20 @@ export const startAnim = function() {
           uniforms: this.uniforms
         });
         this.groundMaterial = new THREE.MeshPhongMaterial({
+          ambient: 0xffffff,
           color: 0xffffff,
           specular: 0x050505
         });
         this.groundMaterial.color.setHSL(0.095, 1, 0.75);
         this.groundMaterial.visible = false;
         this.materials = [this.groundMaterial, this.plane_material];
-        this.plane_mesh = SceneUtils.createMultiMaterialObject(
-          this.plane_geometry,
-          this.materials
-        );
+        this.plane_mesh = SceneUtils.createMultiMaterialObject(this.plane_geometry, this.materials);
         this.plane_mesh.rotation.x = -Math.PI / 2;
         return (this.plane_mesh.position.y = -0.5);
       }
 
       update() {
-        return (this.plane_material.uniforms[
-          "time"
-        ].value = this.clock.getElapsedTime());
+        return (this.plane_material.uniforms['time'].value = this.clock.getElapsedTime());
       }
     }
 
@@ -224,7 +215,7 @@ export const startAnim = function() {
       sombrero_frequency: 10.0,
       speed: 0.64,
       segments: 300,
-      wireframe_color: "#9b9b9b",
+      wireframe_color: '#9b9b9b',
       perlin_passes: 2,
       wireframe: true,
       floor_visible: false
@@ -239,7 +230,7 @@ export const startAnim = function() {
 
   App.init();
 
-  window.addEventListener("resize", onWindowResize, false);
+  window.addEventListener('resize', onWindowResize, false);
 
   function onWindowResize() {
     App.camera.aspect = window.innerWidth / window.innerHeight;

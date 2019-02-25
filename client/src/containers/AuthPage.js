@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Segment, Grid, Form, Button, Message } from "semantic-ui-react";
 import { Formik, ErrorMessage } from "formik";
-import { fetchTokenPair } from "./authActions";
-import { startAnim } from "./esaAnimation";
+import { fetchTokenPair } from "../auth/authActions";
+import { startAnim } from "../auth/esaAnimation";
 
 class AuthPage extends Component {
   constructor(props) {
