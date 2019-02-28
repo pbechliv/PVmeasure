@@ -1,4 +1,6 @@
 import React from "react";
+import GroupForm from "../components/GroupForm";
+import { Container } from "semantic-ui-react";
 
 class ListPage extends React.Component {
   constructor(props) {
@@ -6,12 +8,14 @@ class ListPage extends React.Component {
     this.state = {};
   }
 
-  async componentDidMount() {
-      
-  }
+  async componentDidMount() {}
 
   render() {
-    return <div>Ticket List</div>;
+    return (
+      <Container textAlign="center">
+        <GroupForm />
+      </Container>
+    );
   }
 }
 

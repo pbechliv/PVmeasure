@@ -63,6 +63,7 @@ const refreshTokens = async () => {
 export const readAuthToken = () => async dispatch => {
   let accessToken = localStorage.getItem("accessToken");
   if (accessToken) {
+    console.log("inside")
     const parsedAccess = getTokenExpiration(accessToken);
     if (parsedAccess.exp * 1000 <= Date.now()) {
       const parsedRefresh = getTokenExpiration(
