@@ -14,18 +14,18 @@ class MeasurementGroupViewSet(ModelViewSet):
     Additionally we also provide an extra `highlight` action.
     """
 
-    # queryset = MeasurementGroup.objects.all()
+    queryset = MeasurementGroup.objects.all()
     serializer_class = MeasurementGroupSerializer
 
-    def get_queryset(self):
-        if self.queryset:
-            queryset = self.queryset
-        else:
-            queryset = MeasurementGroup.objects.filter(user=self.request.user)
-        # if isinstance(queryset, QuerySet):
-        #     # Ensure queryset is re-evaluated on each request.
-        #     queryset = queryset
-        return queryset
+    # def get_queryset(self):
+    #     if self.queryset:
+    #         queryset = self.queryset
+    #     else:
+    #         queryset = MeasurementGroup.objects.filter(user=self.request.user)
+    #     # if isinstance(queryset, QuerySet):
+    #     #     # Ensure queryset is re-evaluated on each request.
+    #     #     queryset = queryset
+    #     return queryset
 
 
 class MeasurementRecordingViewSet(ModelViewSet):

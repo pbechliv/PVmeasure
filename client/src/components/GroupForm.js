@@ -1,29 +1,104 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Segment, Grid, Form, Button, Message } from "semantic-ui-react";
+import {
+  Segment,
+  Grid,
+  Form,
+  Button,
+  Message,
+  TextArea
+} from "semantic-ui-react";
 import { Formik, ErrorMessage, FastField } from "formik";
 import "semantic-ui-css/semantic.min.css";
+import { setFetchHeaders } from "../lib";
+import { HOST_URL } from "..";
 
 class GroupForm extends React.Component {
+  state = {
+    formError: ""
+  };
+
+  async submitForm(values, actions) {
+    const postData = new FormData();
+    postData.append("user", this.props.userId);
+    postData.append("name", values.name);
+    postData.append("date", values.date);
+    postData.append("comment", values.comment);
+    const headers = setFetchHeaders("POST", postData);
+    const response = await fetch(HOST_URL + "/measurement_groups/", headers);
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log(response);
+      console.log(responseData);
+      if (responseData._error)
+        this.setState({ loginError: responseData._error[0] });
+    } else if (response.status === 400) {
+      const responseData = await response.json();
+      console.log(response);
+      console.log(responseData);
+    }
+    actions.setSubmitting(false);
+  }
+
+  validate(values, actions) {
+    let errors = {};
+    if (!values.name) {
+      errors.name = "This field may not be blank.";
+    }
+    return errors;
+  }
+
   render() {
     return (
       <Formik
+        validate={this.validate}
+        onSubmit={(values, actions) => this.submitForm(values, actions)}
         initialValues={{
           name: "",
-          date: ""
+          date: "",
+          comment: ""
         }}
       >
         {props => {
           return (
-            <Form>
-              <Form.Field>
+            <Form
+              onSubmit={props.handleSubmit}
+              error={
+                Object.values(props.errors).length > 0 || !!this.state.formError
+              }
+            >
+              <Form.Field required>
                 <label>Name</label>
                 <FastField name="name" type="text" />
+                <Message error>
+                  <ErrorMessage name="name" />
+                </Message>
               </Form.Field>
               <Form.Field>
                 <label>Date</label>
                 <FastField name="date" type="date" />
+                <Message error>
+                  <ErrorMessage name="date" />
+                </Message>
               </Form.Field>
+              {/* <Form.Field>
+                <label>Comment</label>
+                <TextArea name="comment" type="textarea" rows="3" columns="3" />
+                <Message error>
+                  <ErrorMessage name="comment" />
+                </Message>
+              </Form.Field> */}
+              <Message error>{this.state.formError}</Message>
+              <Button
+                color="yellow"
+                onClick={props.handleReset}
+                disabled={!props.dirty || props.isSubmitting}
+              >
+                Reset
+              </Button>
+              <Button type="submit" color="black" disabled={props.isSubmitting}>
+                Log in
+              </Button>
             </Form>
           );
         }}
@@ -32,4 +107,8 @@ class GroupForm extends React.Component {
   }
 }
 
-export default GroupForm;
+const mapStateToProps = state => ({
+  userId: state.main.userId
+});
+
+export default connect(mapStateToProps)(GroupForm);
