@@ -10,6 +10,7 @@ import * as serviceWorker from "./serviceWorker";
 import reducer from "./store/reducer";
 import thunk from "redux-thunk";
 import { readAuthToken } from "./auth/authActions";
+import "semantic-ui-css/semantic.min.css";
 
 export const HOST_URL = "http://localhost:8000";
 

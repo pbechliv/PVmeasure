@@ -1,6 +1,10 @@
 import React from "react";
+import { connect } from "react-redux";
 import GroupForm from "../components/GroupForm";
-import { Container, Segment, Header, Grid } from "semantic-ui-react";
+import { Segment, Header, Grid, Card } from "semantic-ui-react";
+import { setFetchHeaders } from "../lib";
+import { HOST_URL } from "..";
+import * as actions from "../store/actions";
 
 class GroupListPage extends React.Component {
   constructor(props) {
@@ -8,7 +12,18 @@ class GroupListPage extends React.Component {
     this.state = {};
   }
 
-  async componentDidMount() {}
+  async componentDidMount() {
+    const headers = setFetchHeaders("GET");
+    try {
+      const response = await fetch(HOST_URL + "/measurement_groups/", headers);
+      if (response.ok) {
+        const responseData = await response.json();
+        this.props.setGroups(responseData);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   render() {
     return (
@@ -16,17 +31,39 @@ class GroupListPage extends React.Component {
         <Grid.Column width={4}>
           <Segment.Group compact>
             <Segment inverted color="black">
-              <Header> Start a new measurement group</Header>
+              <Header> Start a new group of measurements</Header>
             </Segment>
             <Segment>
               <GroupForm />
             </Segment>
           </Segment.Group>
         </Grid.Column>
-        <Grid.Column width={12}>List</Grid.Column>
+        <Grid.Column width={12}>
+          {this.props.groups.results.map((group, index) => (
+            <Card key={`group-${index}`}>
+              <Card.Content>
+                <Card.Header>
+                  {group.name ? group.name : "Recordings"}
+                  {group.date ? ` - ${group.date}` : ""}
+                </Card.Header>
+              </Card.Content>
+            </Card>
+          ))}
+        </Grid.Column>
       </Grid>
     );
   }
 }
 
-export default GroupListPage;
+const mapStateToProps = state => ({
+  groups: state.main.groups
+});
+
+const mapDispatchToProps = {
+  setGroups: actions.setGroups
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(GroupListPage);

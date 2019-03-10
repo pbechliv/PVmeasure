@@ -14,18 +14,19 @@ class MeasurementGroupViewSet(ModelViewSet):
     Additionally we also provide an extra `highlight` action.
     """
 
-    queryset = MeasurementGroup.objects.all()
     serializer_class = MeasurementGroupSerializer
 
-    # def get_queryset(self):
-    #     if self.queryset:
-    #         queryset = self.queryset
-    #     else:
-    #         queryset = MeasurementGroup.objects.filter(user=self.request.user)
-    #     # if isinstance(queryset, QuerySet):
-    #     #     # Ensure queryset is re-evaluated on each request.
-    #     #     queryset = queryset
-    #     return queryset
+    def get_queryset(self):
+        if self.request.user.is_anonymous:
+            queryset = MeasurementGroup.objects.all().order_by("-created")
+        else:
+            queryset = MeasurementGroup.objects.filter(user=self.request.user).order_by(
+                "-created"
+            )
+        # if isinstance(queryset, QuerySet):
+        #     # Ensure queryset is re-evaluated on each request.
+        #     queryset = queryset
+        return queryset
 
 
 class MeasurementRecordingViewSet(ModelViewSet):
@@ -40,9 +41,9 @@ class MeasurementRecordingViewSet(ModelViewSet):
 
     def get_queryset(self):
 
-        group = request.GET.get("group", None)
+        group = self.request.GET.get("group", None)
 
-        if self.queryset:
+        if self.queryset.is_anonymous:
             queryset = self.queryset
         else:
             queryset = MeasurementRecording.objects.filter(group=group)

@@ -11,7 +11,7 @@ class AuthPage extends Component {
     this.state = { loginError: "" };
   }
   componentDidMount() {
-    // startAnim();
+    startAnim();
   }
 
   validate(values, actions) {

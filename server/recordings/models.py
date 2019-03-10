@@ -14,6 +14,7 @@ class MeasurementGroup(models.Model):
     user = models.ForeignKey(
         User, related_name="measurements", on_delete=models.CASCADE
     )
+    name = models.CharField(max_length=250, blank=True, null=True)
     date = models.CharField(max_length=250, blank=True, null=True)
     comment = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)

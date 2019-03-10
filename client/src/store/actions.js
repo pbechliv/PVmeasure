@@ -5,3 +5,13 @@ export const setAuthStatus = (status, userId) => ({
   status,
   userId
 });
+
+export const setGroups = groups => ({
+  type: types.SET_GROUPS,
+  groups
+});
+
+export const addGroup = group => ({
+  type: types.ADD_GROUP,
+  group
+});
