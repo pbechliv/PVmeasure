@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import GroupForm from "../components/GroupForm";
 import { Segment, Header, Grid, Card } from "semantic-ui-react";
 import { setFetchHeaders } from "../lib";
@@ -42,7 +43,7 @@ class GroupListPage extends React.Component {
           {this.props.groups.results.map((group, index) => (
             <Card key={`group-${index}`}>
               <Card.Content>
-                <Card.Header>
+                <Card.Header as={Link} to={`/recordings/${group.id}/`}>
                   {group.name ? group.name : "Recordings"}
                   {group.date ? ` - ${group.date}` : ""}
                 </Card.Header>

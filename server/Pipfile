@@ -6,14 +6,14 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-django-cors-headers = "==2.4.0"
-djangorestframework = "==3.9.1"
-psycopg2-binary = "==2.7.7"
-pytz = "==2018.9"
-sqlparse = "==0.2.4"
-djangorestframework-simplejwt = "==3.3"
-Django = "==2.1.5"
-Pillow = "==5.4.1"
+django-cors-headers = "*"
+djangorestframework = "*"
+psycopg2-binary = "*"
+pytz = "*"
+sqlparse = "*"
+djangorestframework-simplejwt = "*"
+Django = "*"
+Pillow = "*"
 black = "==18.9b0"
 flake8 = "*"
 

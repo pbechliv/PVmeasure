@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Form, Button, Message } from "semantic-ui-react";
 import { Formik, ErrorMessage, FastField } from "formik";
+import { toastr } from "react-redux-toastr";
 import * as actions from "../store/actions";
 import { setFetchHeaders } from "../lib";
 import { HOST_URL } from "..";
@@ -25,7 +26,7 @@ class GroupForm extends React.Component {
       if (responseData._error)
         this.setState({ loginError: responseData._error[0] });
     } else if (response.status === 400) {
-      const responseData = await response.json();
+      toastr.error("Something went wrong...");
     }
     actions.setSubmitting(false);
   }

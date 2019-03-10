@@ -6,9 +6,11 @@ import {
   userIsNotAuthenticated
 } from "./auth/authWrapper";
 import GroupListPage from "./containers/GroupListPage";
+import RecordingsListPage from "./containers/RecordingsListPage";
 
 const protectedAuthPage = userIsNotAuthenticated(AuthPage);
 const protectedGroupListPage = userIsAuthenticated(GroupListPage);
+const protectedRecordingsListPage = userIsAuthenticated(RecordingsListPage);
 
 class App extends Component {
   render() {
@@ -16,6 +18,11 @@ class App extends Component {
       <Switch>
         <Route path="/login" exact component={protectedAuthPage} />
         <Route path="/" exact component={protectedGroupListPage} />
+        <Route
+          path="/recordings/:id"
+          exact
+          component={protectedRecordingsListPage}
+        />
       </Switch>
     );
   }

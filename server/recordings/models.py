@@ -26,7 +26,6 @@ class MeasurementRecording(models.Model):
         MeasurementGroup, related_name="recordings", on_delete=models.CASCADE
     )
     measuring_point = models.CharField(max_length=250)
-    number = models.PositiveIntegerField(default=1)
     measurements = JSONField(default=list)
     polarity_test = models.BooleanField(default=False)
     image = models.ImageField(upload_to=measurement_filepath, blank=True)
