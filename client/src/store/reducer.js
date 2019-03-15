@@ -5,13 +5,15 @@ import * as types from "./types";
 const INITIAL_STATE = {
   isAuthenticated: false,
   userId: null,
+  username: "",
   groups: { count: 0, next: null, previous: null, results: [] }
 };
 
 const setAuthStatus = (state, action) => ({
   ...state,
   isAuthenticated: action.status,
-  userId: action.userId
+  userId: action.userId,
+  username: action.username
 });
 
 const setGroups = (state, action) => ({
@@ -28,6 +30,11 @@ const addGroup = (state, action) => ({
   }
 });
 
+const setCurrentGroup = (state, action) => ({
+  ...state,
+  currentGroup: action.group
+});
+
 const mainReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case types.SET_AUTH_STATUS:
@@ -36,6 +43,8 @@ const mainReducer = (state = INITIAL_STATE, action) => {
       return setGroups(state, action);
     case types.ADD_GROUP:
       return addGroup(state, action);
+    case types.SET_CURRENT_GROUP:
+      return setCurrentGroup(state, action);
     default:
       return state;
   }

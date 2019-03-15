@@ -1,9 +1,10 @@
 import * as types from "./types";
 
-export const setAuthStatus = (status, userId) => ({
+export const setAuthStatus = (status, userId, username) => ({
   type: types.SET_AUTH_STATUS,
   status,
-  userId
+  userId,
+  username
 });
 
 export const setGroups = groups => ({
@@ -13,5 +14,10 @@ export const setGroups = groups => ({
 
 export const addGroup = group => ({
   type: types.ADD_GROUP,
+  group
+});
+
+export const setCurrentGroup = group => ({
+  type: types.SET_CURRENT_GROUP,
   group
 });

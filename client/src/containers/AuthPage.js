@@ -52,8 +52,10 @@ class AuthPage extends Component {
         <div
           style={{
             position: "absolute",
-            top: "20px",
-            left: "15px"
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0
           }}
         >
           <img src={"/uniwa.png"} height="200px" alt="" />

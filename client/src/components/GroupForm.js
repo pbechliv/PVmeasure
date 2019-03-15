@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Form, Button, Message } from "semantic-ui-react";
+import { Form, Button, Message, TextArea } from "semantic-ui-react";
 import { Formik, ErrorMessage, FastField } from "formik";
 import { toastr } from "react-redux-toastr";
 import * as actions from "../store/actions";
@@ -72,13 +72,21 @@ class GroupForm extends React.Component {
                   <ErrorMessage name="date" />
                 </Message>
               </Form.Field>
-              {/* <Form.Field>
-                <label>Comment</label>
-                <TextArea name="comment" type="textarea" rows="3" columns="3" />
+              <Form.Field>
+                <label htmlFor="comment">Comments...</label>
+                <TextArea
+                  id="comment"
+                  name="comment"
+                  value={props.values.comment}
+                  onChange={(e, data) =>
+                    props.setFieldValue(data.name, data.value)
+                  }
+                  onBlur={props.handleBlur}
+                />
                 <Message error>
                   <ErrorMessage name="comment" />
                 </Message>
-              </Form.Field> */}
+              </Form.Field>
               <Message error>{this.state.formError}</Message>
               <Button
                 color="yellow"

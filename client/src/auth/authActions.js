@@ -6,7 +6,11 @@ import { setFetchHeaders } from "../lib";
 const getTokenExpiration = token => {
   const splitToken = token.split(".");
   const parsedToken = JSON.parse(base64url.decode(splitToken[1]));
-  return { exp: parsedToken.exp, userId: parsedToken.user_id };
+  return {
+    exp: parsedToken.exp,
+    userId: parsedToken.user_id,
+    username: parsedToken.username
+  };
 };
 
 export const fetchTokenPair = (username, password) => async dispatch => {
@@ -25,7 +29,9 @@ export const fetchTokenPair = (username, password) => async dispatch => {
       setTimeout(() => {
         refreshTokens();
       }, parsedToken.exp * 1000 - Date.now());
-      await dispatch(actions.setAuthStatus(true, parsedToken.userId));
+      await dispatch(
+        actions.setAuthStatus(true, parsedToken.userId, parsedToken.username)
+      );
     } else {
       dispatch(actions.setAuthStatus(false));
     }
@@ -63,7 +69,7 @@ const refreshTokens = async () => {
 export const readAuthToken = () => async dispatch => {
   let accessToken = localStorage.getItem("accessToken");
   if (accessToken) {
-    console.log("inside")
+    console.log("inside");
     const parsedAccess = getTokenExpiration(accessToken);
     if (parsedAccess.exp * 1000 <= Date.now()) {
       const parsedRefresh = getTokenExpiration(
@@ -72,11 +78,19 @@ export const readAuthToken = () => async dispatch => {
       if (parsedRefresh.exp * 1000 > Date.now()) {
         const response = await refreshTokens();
         if (response.ok) {
-          await dispatch(actions.setAuthStatus(true, parsedAccess.userId));
+          await dispatch(
+            actions.setAuthStatus(
+              true,
+              parsedAccess.userId,
+              parsedAccess.username
+            )
+          );
         }
       }
     } else {
-      await dispatch(actions.setAuthStatus(true, parsedAccess.userId));
+      await dispatch(
+        actions.setAuthStatus(true, parsedAccess.userId, parsedAccess.username)
+      );
       setTimeout(() => {
         refreshTokens();
       }, parsedAccess.exp * 1000 - Date.now());
@@ -89,5 +103,5 @@ export const readAuthToken = () => async dispatch => {
 export const logout = () => async dispatch => {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
-  dispatch(actions.setAuthStatus(false));
+  dispatch(actions.setAuthStatus(false, null, ""));
 };

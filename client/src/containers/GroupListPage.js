@@ -28,7 +28,7 @@ class GroupListPage extends React.Component {
 
   render() {
     return (
-      <Grid container stackable>
+      <Grid stackable>
         <Grid.Column width={4}>
           <Segment.Group compact>
             <Segment inverted color="black">
