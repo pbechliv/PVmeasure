@@ -46,7 +46,7 @@ class GroupForm extends React.Component {
         onSubmit={(values, actions) => this.submitForm(values, actions)}
         initialValues={{
           name: "",
-          date: "",
+          date: new Date().toISOString().substr(0, 10),
           comment: ""
         }}
       >

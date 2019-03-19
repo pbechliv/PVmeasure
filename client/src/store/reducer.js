@@ -30,6 +30,20 @@ const addGroup = (state, action) => ({
   }
 });
 
+const removeGroup = (state, action) => {
+  const newList = [...state.groups.results];
+  const index = newList.findIndex(i => action.group.id === i.id);
+  newList.splice(index, 1);
+  return {
+    ...state,
+    groups: {
+      ...state.groups,
+      count: state.groups.count - 1,
+      results: newList
+    }
+  };
+};
+
 const setCurrentGroup = (state, action) => ({
   ...state,
   currentGroup: action.group
@@ -43,6 +57,8 @@ const mainReducer = (state = INITIAL_STATE, action) => {
       return setGroups(state, action);
     case types.ADD_GROUP:
       return addGroup(state, action);
+    case types.REMOVE_GROUP:
+      return removeGroup(state, action);
     case types.SET_CURRENT_GROUP:
       return setCurrentGroup(state, action);
     default:

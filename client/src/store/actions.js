@@ -17,6 +17,11 @@ export const addGroup = group => ({
   group
 });
 
+export const removeGroup = group => ({
+  type: types.REMOVE_GROUP,
+  group
+});
+
 export const setCurrentGroup = group => ({
   type: types.SET_CURRENT_GROUP,
   group

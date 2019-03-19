@@ -1,8 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { toastr } from "react-redux-toastr";
 import GroupForm from "../components/GroupForm";
-import { Segment, Header, Grid, Card } from "semantic-ui-react";
+import { Segment, Header, Grid, Card, Icon } from "semantic-ui-react";
 import { setFetchHeaders } from "../lib";
 import { HOST_URL } from "..";
 import * as actions from "../store/actions";
@@ -16,7 +17,7 @@ class GroupListPage extends React.Component {
   async componentDidMount() {
     const headers = setFetchHeaders("GET");
     try {
-      const response = await fetch(HOST_URL + "/measurement_groups/", headers);
+      const response = await fetch(`${HOST_URL}/measurement_groups/`, headers);
       if (response.ok) {
         const responseData = await response.json();
         this.props.setGroups(responseData);
@@ -24,6 +25,27 @@ class GroupListPage extends React.Component {
     } catch (e) {
       console.log(e);
     }
+  }
+
+  async deleteGroup(group) {
+    toastr.confirm(`Are you sure you want to delete ${group.name}?`, {
+      onOk: async () => {
+        const headers = setFetchHeaders("DELETE");
+        try {
+          const response = await fetch(
+            `${HOST_URL}/measurement_groups/${group.id}/`,
+            headers
+          );
+          if (response.ok) {
+            toastr.warning(`${group.name} has been successfully deleted...`);
+            this.props.removeGroup(group);
+          }
+        } catch (e) {
+          console.log(e);
+          toastr.error(`Something went wrong...`);
+        }
+      }
+    });
   }
 
   render() {
@@ -43,9 +65,17 @@ class GroupListPage extends React.Component {
           {this.props.groups.results.map((group, index) => (
             <Card key={`group-${index}`}>
               <Card.Content>
-                <Card.Header as={Link} to={`/recordings/${group.id}/`}>
-                  {group.name ? group.name : "Recordings"}
-                  {group.date ? ` - ${group.date}` : ""}
+                <Card.Header>
+                  <Link to={`/recordings/${group.id}/`}>
+                    {group.name ? group.name : "Recordings"}
+                    {group.date ? ` - ${group.date}` : ""}
+                  </Link>
+                  <Icon
+                    link
+                    style={{ float: "right" }}
+                    name="minus circle"
+                    onClick={() => this.deleteGroup(group)}
+                  />
                 </Card.Header>
               </Card.Content>
             </Card>
@@ -61,7 +91,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  setGroups: actions.setGroups
+  setGroups: actions.setGroups,
+  removeGroup: actions.removeGroup
 };
 
 export default connect(

@@ -2,3 +2,7 @@ body {
   padding-top: 10px;
   background-color: #fdfdfd;
 }
+
+a {
+  color: rgb(210, 54, 105);
+}
