@@ -22,9 +22,10 @@ class GroupForm extends React.Component {
     const response = await fetch(HOST_URL + "/measurement_groups/", headers);
     if (response.ok) {
       const responseData = await response.json();
+      toastr.success("You successfully started a measurement group");
       this.props.addGroup(responseData);
       if (responseData._error)
-        this.setState({ loginError: responseData._error[0] });
+        this.setState({ formError: responseData._error[0] });
     } else if (response.status === 400) {
       toastr.error("Something went wrong...");
     }
@@ -89,6 +90,7 @@ class GroupForm extends React.Component {
               </Form.Field>
               <Message error>{this.state.formError}</Message>
               <Button
+                type="button"
                 color="yellow"
                 onClick={props.handleReset}
                 disabled={!props.dirty || props.isSubmitting}

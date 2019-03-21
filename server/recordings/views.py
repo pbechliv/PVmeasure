@@ -37,8 +37,8 @@ class MeasurementRecordingViewSet(ModelViewSet):
 
         group = self.request.GET.get("group", None)
 
-        if self.queryset.is_anonymous:
-            queryset = self.queryset
+        if self.request.user.is_anonymous:
+            queryset = MeasurementRecording.objects.all()
         else:
             queryset = MeasurementRecording.objects.filter(group=group)
         return queryset

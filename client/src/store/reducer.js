@@ -6,7 +6,10 @@ const INITIAL_STATE = {
   isAuthenticated: false,
   userId: null,
   username: "",
-  groups: { count: 0, next: null, previous: null, results: [] }
+  groups: { count: 0, next: null, previous: null, results: [] },
+  recordings: { count: 0, next: null, previous: null, results: [] },
+  currentGroup: null,
+  currentRecording: null
 };
 
 const setAuthStatus = (state, action) => ({
@@ -49,6 +52,39 @@ const setCurrentGroup = (state, action) => ({
   currentGroup: action.group
 });
 
+const setRecordings = (state, action) => ({
+  ...state,
+  recordings: action.recordings
+});
+
+const addRecording = (state, action) => ({
+  ...state,
+  recordings: {
+    ...state.recordings,
+    count: state.recordings.count++,
+    results: [action.recording, ...state.recordings.results]
+  }
+});
+
+const removeRecording = (state, action) => {
+  const newList = [...state.recordings.results];
+  const index = newList.findIndex(i => action.recording.id === i.id);
+  newList.splice(index, 1);
+  return {
+    ...state,
+    recordings: {
+      ...state.recordings,
+      count: state.recordings.count - 1,
+      results: newList
+    }
+  };
+};
+
+const setCurrentRecording = (state, action) => ({
+  ...state,
+  currentRecording: action.recording
+});
+
 const mainReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case types.SET_AUTH_STATUS:
@@ -61,6 +97,14 @@ const mainReducer = (state = INITIAL_STATE, action) => {
       return removeGroup(state, action);
     case types.SET_CURRENT_GROUP:
       return setCurrentGroup(state, action);
+    case types.SET_RECORDINGS:
+      return setRecordings(state, action);
+    case types.ADD_RECORDING:
+      return addRecording(state, action);
+    case types.REMOVE_RECORDING:
+      return removeRecording(state, action);
+    case types.SET_CURRENT_RECORDING:
+      return setCurrentRecording(state, action);
     default:
       return state;
   }

@@ -1,7 +1,12 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Form, Button, Message, Checkbox, TextArea } from "semantic-ui-react";
 import { Formik, ErrorMessage, FastField, FieldArray } from "formik";
+import { toastr } from "react-redux-toastr";
+import { setFetchHeaders } from "../lib";
+import { HOST_URL } from "..";
+import * as actions from "../store/actions";
 
 class RecordingForm extends React.Component {
   constructor(props) {
@@ -11,11 +16,40 @@ class RecordingForm extends React.Component {
     };
   }
 
+  async submitForm(values, actions) {
+    const postData = new FormData();
+    postData.append("group", this.props.match.params.id);
+    postData.append("measuring_point", values.measuring_point);
+    postData.append("measurements", JSON.stringify(values.measurements));
+    postData.append("polarity_test", values.polarity_test);
+    postData.append("comment", values.comment);
+    const headers = setFetchHeaders("POST", postData);
+    const response = await fetch(`${HOST_URL}/recordings/`, headers);
+    if (response.ok) {
+      toastr.success("You successfully created a new recording");
+      const responseData = await response.json();
+      this.props.addRecording(responseData);
+      if (responseData._error)
+        this.setState({ formError: responseData._error[0] });
+    } else if (response.status === 400) {
+      toastr.error("Something went wrong...");
+    }
+    actions.setSubmitting(false);
+  }
+
+  validate(values, actions) {
+    let errors = {};
+    if (!values.name) {
+      errors.name = "This field may not be blank.";
+    }
+    return errors;
+  }
+
   render() {
     return (
       <>
         <Formik
-          validate={this.validate}
+          // validate={this.validate}
           onSubmit={(values, actions) => this.submitForm(values, actions)}
           initialValues={{
             measurements: [{ type: "", value: "", unit: "" }],
@@ -57,12 +91,14 @@ class RecordingForm extends React.Component {
                                     list="optionsType"
                                     name={`measurements[${index}].type`}
                                     placeholder="type"
+                                    type="text"
                                   />
                                 </Form.Field>
                                 <Form.Field>
                                   <FastField
                                     name={`measurements[${index}].value`}
                                     placeholder="value"
+                                    type="number"
                                   />
                                 </Form.Field>
                                 <Form.Field>
@@ -70,6 +106,7 @@ class RecordingForm extends React.Component {
                                     list="optionsUnit"
                                     name={`measurements[${index}].unit`}
                                     placeholder="unit"
+                                    type="text"
                                   />
                                 </Form.Field>
                                 {props.values.measurements.length > 1 && (
@@ -126,6 +163,7 @@ class RecordingForm extends React.Component {
                   />
                 </Form.Field>
                 <Button
+                  type="button"
                   color="yellow"
                   onClick={props.handleReset}
                   disabled={!props.dirty || props.isSubmitting}
@@ -167,4 +205,13 @@ class RecordingForm extends React.Component {
   }
 }
 
-export default connect()(RecordingForm);
+const mapDispatchToProps = {
+  addRecording: actions.addRecording
+};
+
+export default withRouter(
+  connect(
+    null,
+    mapDispatchToProps
+  )(RecordingForm)
+);

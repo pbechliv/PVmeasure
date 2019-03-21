@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Segment, Grid, Form, Button, Message } from "semantic-ui-react";
 import { Formik, ErrorMessage } from "formik";
 import { fetchTokenPair } from "../auth/authActions";
-import { startAnim } from "../auth/esaAnimation";
+// import { startAnim } from "../auth/esaAnimation";
 
 class AuthPage extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ class AuthPage extends Component {
     this.state = { loginError: "" };
   }
   componentDidMount() {
-    startAnim();
+    // startAnim(); TODO enable this
   }
 
   validate(values, actions) {
