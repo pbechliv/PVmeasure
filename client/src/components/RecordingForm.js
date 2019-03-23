@@ -46,17 +46,23 @@ class RecordingForm extends React.Component {
   }
 
   render() {
+    const { currentRecording } = this.props;
     return (
       <>
         <Formik
           // validate={this.validate}
+          enableReinitialize
           onSubmit={(values, actions) => this.submitForm(values, actions)}
-          initialValues={{
-            measurements: [{ type: "", value: "", unit: "" }],
-            measuring_point: "",
-            comment: "",
-            polarity_test: false
-          }}
+          initialValues={
+            currentRecording
+              ? currentRecording
+              : {
+                  measurements: [{ type: "", value: "", unit: "" }],
+                  measuring_point: "",
+                  comment: "",
+                  polarity_test: false
+                }
+          }
         >
           {props => {
             return (
@@ -86,23 +92,41 @@ class RecordingForm extends React.Component {
                                 key={`measurement-input-${index}`}
                                 inline
                               >
-                                <Form.Field>
+                                <Form.Field
+                                  style={{
+                                    maxWidth: "100px",
+                                    padding: "0 2px 0 0"
+                                  }}
+                                >
                                   <FastField
+                                    style={{ maxWidth: "90px" }}
                                     list="optionsType"
                                     name={`measurements[${index}].type`}
                                     placeholder="type"
                                     type="text"
                                   />
                                 </Form.Field>
-                                <Form.Field>
+                                <Form.Field
+                                  style={{
+                                    maxWidth: "100px",
+                                    padding: "0 2px 0 0"
+                                  }}
+                                >
                                   <FastField
+                                    style={{ maxWidth: "90px" }}
                                     name={`measurements[${index}].value`}
                                     placeholder="value"
                                     type="number"
                                   />
                                 </Form.Field>
-                                <Form.Field>
+                                <Form.Field
+                                  style={{
+                                    maxWidth: "100px",
+                                    padding: "0 2px 0 0"
+                                  }}
+                                >
                                   <FastField
+                                    style={{ maxWidth: "90px" }}
                                     list="optionsUnit"
                                     name={`measurements[${index}].unit`}
                                     placeholder="unit"
@@ -205,13 +229,17 @@ class RecordingForm extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  currentRecording: state.main.currentRecording
+});
+
 const mapDispatchToProps = {
   addRecording: actions.addRecording
 };
 
 export default withRouter(
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )(RecordingForm)
 );

@@ -41,15 +41,21 @@ class GroupForm extends React.Component {
   }
 
   render() {
+    const { currentGroup } = this.props;
     return (
       <Formik
+        enableReinitialize
         validate={this.validate}
         onSubmit={(values, actions) => this.submitForm(values, actions)}
-        initialValues={{
-          name: "",
-          date: new Date().toISOString().substr(0, 10),
-          comment: ""
-        }}
+        initialValues={
+          currentGroup
+            ? currentGroup
+            : {
+                name: "",
+                date: new Date().toISOString().substr(0, 10),
+                comment: ""
+              }
+        }
       >
         {props => {
           return (
@@ -109,7 +115,8 @@ class GroupForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  userId: state.main.userId
+  userId: state.main.userId,
+  currentGroup: state.main.currentGroup
 });
 
 const mapDispatchToProps = {

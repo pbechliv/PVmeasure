@@ -73,12 +73,13 @@ class RecordingsListPage extends React.Component {
         </Grid.Column>
         <Grid.Column width={6}>
           {this.props.recordings.results.map((recording, index) => (
-            <Table textAlign="left" key={`recording-${index}`}>
+            <Table compact unstackable textAlign="left" key={`recording-${index}`}>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell>Spot</Table.HeaderCell>
                   <Table.HeaderCell>Measurements</Table.HeaderCell>
                   <Table.HeaderCell>Comment</Table.HeaderCell>
+                  <Table.HeaderCell>Actions</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
               <Table.Body>
@@ -99,17 +100,27 @@ class RecordingsListPage extends React.Component {
                     )}
                   </Table.Cell>
                   <Table.Cell>{recording.comment}</Table.Cell>
-                </Table.Row>
-                {/* <Table.Row>
-                  <Table.Cell>
-                    {recording.measurements.map((m, i) => (
-                      <div key={`mr-${i}`}>{m.type}</div>
-                    ))}
+                  <Table.Cell textAlign="center">
+                    <div style={{ marginBottom: "10px" }}>
+                      <Icon
+                        onClick={() =>
+                          this.props.setCurrentRecording(recording)
+                        }
+                        link
+                        color="orange"
+                        name="edit"
+                      />
+                    </div>
+                    <div>
+                      <Icon
+                        onClick={() => this.props.deleteRecording(recording)}
+                        link
+                        color="red"
+                        name="remove"
+                      />
+                    </div>
                   </Table.Cell>
                 </Table.Row>
-                <Table.Row>
-                  <Table.Cell>{recording.comment}</Table.Cell>
-                </Table.Row> */}
               </Table.Body>
             </Table>
           ))}
@@ -126,7 +137,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   setCurrentGroup: actions.setCurrentGroup,
   setRecordings: actions.setRecordings,
-  removeRecording: actions.removeRecording
+  removeRecording: actions.removeRecording,
+  setCurrentRecording: actions.setCurrentRecording
 };
 
 export default connect(

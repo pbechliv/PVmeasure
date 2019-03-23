@@ -66,16 +66,33 @@ class GroupListPage extends React.Component {
             <Card key={`group-${index}`}>
               <Card.Content>
                 <Card.Header>
-                  <Link to={`/recordings/${group.id}/`}>
+                  <Link
+                    to={`/recordings/${group.id}/`}
+                    style={{ display: "inline-block" }}
+                  >
                     {group.name ? group.name : "Recordings"}
                     {group.date ? ` - ${group.date}` : ""}
                   </Link>
-                  <Icon
-                    link
-                    style={{ float: "right" }}
-                    name="minus circle"
-                    onClick={() => this.deleteGroup(group)}
-                  />
+                  <div style={{ float: "right", display: "inline-block" }}>
+                    <div style={{ marginBottom: "10px" }}>
+                      <Icon
+                        link
+                        name="edit"
+                        color="orange"
+                        onClick={() => this.props.setCurrentGroup(group)}
+                      />
+                    </div>
+                    <div>
+                      <Icon
+                        link
+                        name="remove"
+                        color="red"
+                        onClick={() => this.deleteGroup(group)}
+                      />
+                    </div>
+                    <div />
+                  </div>
+                  <p>{group.comment}</p>
                 </Card.Header>
               </Card.Content>
             </Card>
@@ -92,7 +109,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setGroups: actions.setGroups,
-  removeGroup: actions.removeGroup
+  removeGroup: actions.removeGroup,
+  setCurrentGroup: actions.setCurrentGroup
 };
 
 export default connect(
