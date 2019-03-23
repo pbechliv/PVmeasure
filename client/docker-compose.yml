@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  app:
+    container_name: renergea_app
+    image: pbechliv/docker-gen
+    restart: always
+    environment:
+      # Read by nginx-gen container
+      # Can use multiple subdomains. Example: "host1.domain.com,host2.domain.com"
+      - VIRTUAL_HOST=pbechliv.dev,www.pbechliv.dev
+
+      # Read by letsencrypt-nginx-proxy-companion container
+      # Can use multiple subdomains. Example: "host1.domain.com,host2.domain.com"
+      - LETSENCRYPT_HOST=pbechliv.dev,www.pbechliv.dev
+      - LETSENCRYPT_EMAIL=panos.bechlivanos@gmail.com
+    networks:
+      - webproxy
+
+networks:
+  webproxy:
+    external:
+      name: webproxy

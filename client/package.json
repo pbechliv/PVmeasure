@@ -5,8 +5,8 @@
   "dependencies": {
     "base64url": "^3.0.1",
     "formik": "^1.5.1",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5",
     "react-redux": "^6.0.1",
     "react-redux-toastr": "^7.4.8",
     "react-router-dom": "^5.0.0",
