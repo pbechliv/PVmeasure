@@ -18,22 +18,22 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
 const app = (
-  <Provider store={store}>
-    <>
-      <BrowserRouter>
+  <BrowserRouter>
+    <Provider store={store}>
+      <>
         <App />
-      </BrowserRouter>
-      <ReduxToastr
-        timeOut={5000}
-        newestOnTop={false}
-        position="top-right"
-        transitionIn="bounceIn"
-        transitionOut="bounceOut"
-        progressBar
-        closeOnToastrClick
-      />
-    </>
-  </Provider>
+        <ReduxToastr
+          timeOut={5000}
+          newestOnTop={false}
+          position="top-right"
+          transitionIn="bounceIn"
+          transitionOut="bounceOut"
+          progressBar
+          closeOnToastrClick
+        />
+      </>
+    </Provider>
+  </BrowserRouter>
 );
 
 store

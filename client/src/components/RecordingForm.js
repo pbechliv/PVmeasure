@@ -38,19 +38,62 @@ class RecordingForm extends React.Component {
   }
 
   validate(values, actions) {
-    let errors = {};
-    if (!values.name) {
-      errors.name = "This field may not be blank.";
+    let errors = {
+      measurements: values.measurements.map(i => "")
+    };
+    if (!values.measuring_point) {
+      errors.measuring_point = "This field may not be blank.";
     }
+    values.measurements.forEach((mr, index) => {
+      if (!mr.type && !!mr.value && !!mr.unit) {
+        errors.measurements.splice(index, 1, "You must select a type");
+      }
+      if (!!mr.type && !mr.value && !!mr.unit) {
+        errors.measurements.splice(index, 1, "You must set a value");
+      }
+      if (!!mr.type && !!mr.value && !mr.unit) {
+        errors.measurements.splice(index, 1, "You must select a unit");
+      }
+      if (
+        (["voc", "vmppp"].includes(mr.type.toLowerCase()) &&
+          ["a", "kw", "ohm", "°c", "w/m2"].includes(mr.unit.toLowerCase())) ||
+        (["isc", "imppp"].includes(mr.type.toLowerCase()) &&
+          ["v", "kw", "ohm", "°c", "w/m2"].includes(mr.unit.toLowerCase())) ||
+        (["pmppp"].includes(mr.type.toLowerCase()) &&
+          ["a", "v", "ohm", "°c", "w/m2"].includes(mr.unit.toLowerCase())) ||
+        (["tmod", "temp"].includes(mr.type.toLowerCase()) &&
+          ["a", "v", "ohm", "kw", "w/m2"].includes(mr.unit.toLowerCase())) ||
+        (["irr"].includes(mr.type.toLowerCase()) &&
+          ["a", "v", "ohm", "kw", "°c"].includes(mr.unit.toLowerCase()))
+      ) {
+        errors.measurements.splice(
+          index,
+          1,
+          "Unit or type selected is not correct"
+        );
+      }
+      if (["voc", "vmppp"].includes(mr.type.toLowerCase()) && mr.value < 0) {
+        errors.measurements.splice(
+          index,
+          1,
+          "The value should not be negative"
+        );
+      }
+    });
     return errors;
   }
-
+  // <option value="V" />
+  // <option value="A" />
+  // <option value="kW" />
+  // <option value="Ohm" />
+  // <option value="°C" />
+  // <option value="W/m2" />
   render() {
     const { currentRecording } = this.props;
     return (
       <>
         <Formik
-          // validate={this.validate}
+          validate={this.validate}
           enableReinitialize
           onSubmit={(values, actions) => this.submitForm(values, actions)}
           initialValues={
@@ -88,68 +131,81 @@ class RecordingForm extends React.Component {
                         <div>
                           {props.values.measurements.map(
                             (measurement, index) => (
-                              <Form.Group
-                                key={`measurement-input-${index}`}
-                                inline
-                              >
-                                <Form.Field
-                                  style={{
-                                    maxWidth: "100px",
-                                    padding: "0 2px 0 0"
-                                  }}
-                                >
-                                  <FastField
-                                    style={{ maxWidth: "90px" }}
-                                    list="optionsType"
-                                    name={`measurements[${index}].type`}
-                                    placeholder="type"
-                                    type="text"
-                                  />
-                                </Form.Field>
-                                <Form.Field
-                                  style={{
-                                    maxWidth: "100px",
-                                    padding: "0 2px 0 0"
-                                  }}
-                                >
-                                  <FastField
-                                    style={{ maxWidth: "90px" }}
-                                    name={`measurements[${index}].value`}
-                                    placeholder="value"
-                                    type="number"
-                                  />
-                                </Form.Field>
-                                <Form.Field
-                                  style={{
-                                    maxWidth: "100px",
-                                    padding: "0 2px 0 0"
-                                  }}
-                                >
-                                  <FastField
-                                    style={{ maxWidth: "90px" }}
-                                    list="optionsUnit"
-                                    name={`measurements[${index}].unit`}
-                                    placeholder="unit"
-                                    type="text"
-                                  />
-                                </Form.Field>
-                                {props.values.measurements.length > 1 && (
-                                  <Button
-                                    size="mini"
-                                    type="button"
-                                    color="red"
-                                    circular
-                                    onClick={() => arrayProps.remove(index)}
+                              <div key={`measurement-input-${index}`}>
+                                <Form.Group inline>
+                                  <Form.Field
+                                    style={{
+                                      maxWidth: "100px",
+                                      padding: "0 2px 0 0"
+                                    }}
                                   >
-                                    -
-                                  </Button>
-                                )}
-                              </Form.Group>
+                                    <FastField
+                                      style={{ maxWidth: "90px" }}
+                                      list="optionsType"
+                                      name={`measurements[${index}].type`}
+                                      placeholder="type"
+                                      type="text"
+                                    />
+                                  </Form.Field>
+                                  <Form.Field
+                                    style={{
+                                      maxWidth: "100px",
+                                      padding: "0 2px 0 0"
+                                    }}
+                                  >
+                                    <FastField
+                                      style={{ maxWidth: "90px" }}
+                                      name={`measurements[${index}].value`}
+                                      placeholder="value"
+                                      type="number"
+                                    />
+                                  </Form.Field>
+                                  <Form.Field
+                                    style={{
+                                      maxWidth: "100px",
+                                      padding: "0 2px 0 0"
+                                    }}
+                                  >
+                                    <FastField
+                                      style={{ maxWidth: "90px" }}
+                                      list="optionsUnit"
+                                      name={`measurements[${index}].unit`}
+                                      placeholder="unit"
+                                      type="text"
+                                    />
+                                  </Form.Field>
+                                  {props.values.measurements.length > 1 && (
+                                    <Button
+                                      compact
+                                      size="mini"
+                                      type="button"
+                                      color="red"
+                                      circular
+                                      onClick={() => arrayProps.remove(index)}
+                                    >
+                                      -
+                                    </Button>
+                                  )}
+                                </Form.Group>
+                                <Message error>
+                                  <ErrorMessage
+                                    name={`measurements[${index}]`}
+                                  />
+                                </Message>
+                              </div>
                             )
                           )}
 
                           <Button
                             circular
+                            disabled={
+                              props.values.measurements.filter(
+                                mr =>
+                                  Object.values(mr).filter(val => val === "")
+                                    .length > 0
+                              ).length > 0
+                            }
+                            compact
                             color="yellow"
                             type="button"
                             onClick={() =>
