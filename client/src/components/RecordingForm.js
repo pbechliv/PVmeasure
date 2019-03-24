@@ -82,12 +82,6 @@ class RecordingForm extends React.Component {
     });
     return errors;
   }
-  // <option value="V" />
-  // <option value="A" />
-  // <option value="kW" />
-  // <option value="Ohm" />
-  // <option value="°C" />
-  // <option value="W/m2" />
   render() {
     const { currentRecording } = this.props;
     return (
