@@ -80,6 +80,13 @@ class RecordingForm extends React.Component {
         );
       }
     });
+    if (
+      errors.measurements.filter(mr => {
+        return Object.values(mr).filter(value => !!value).length > 0;
+      }).length === 0
+    ) {
+      delete errors.measurements;
+    }
     return errors;
   }
   render() {
