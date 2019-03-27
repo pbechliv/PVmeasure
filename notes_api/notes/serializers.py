@@ -1,14 +1,9 @@
-from .models import MeasurementRecording, MeasurementGroup
+from .models import Note
 from rest_framework import serializers
 
 
-class MeasurementGroupSerializer(serializers.ModelSerializer):
+class NoteSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MeasurementGroup
+        model = Note
         fields = "__all__"
 
-
-class MeasurementRecordingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MeasurementRecording
-        fields = "__all__"

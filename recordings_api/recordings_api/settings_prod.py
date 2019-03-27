@@ -26,7 +26,7 @@ SECRET_KEY = "xaj2iz@-d2av*z#a5ys#migc+f+hw=#@whud62+15t%yf@b7o_"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1", "0.0.0.0", "localhost", "api.pbechliv.dev"]
+ALLOWED_HOSTS = ["127.0.0.1", "0.0.0.0", "localhost", "recordings.pbechliv.dev"]
 
 
 # Application definition
