@@ -35,7 +35,6 @@ class Migration(migrations.Migration):
                 ('measuring_point', models.CharField(max_length=250)),
                 ('measurements', django.contrib.postgres.fields.jsonb.JSONField(default=list)),
                 ('polarity_test', models.BooleanField(default=False)),
-                ('image', models.ImageField(blank=True, upload_to=recordings.models.measurement_filepath)),
                 ('comment', models.TextField(blank=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('updated', models.DateTimeField(auto_now=True)),

@@ -1,0 +1,53 @@
+version: "3"
+
+services:
+  db:
+    container_name: "notes_db"
+    image: postgres:11
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=notes
+      - POSTGRES_PASSWORD=teiath
+    volumes:
+      # This folder contains the database data
+      - "postgres_data:/var/lib/postgresql/data"
+    networks:
+      - notes-db
+
+  api:
+    image: pbechliv/notes_api:latest
+    container_name: "notes_api"
+    restart: always
+    volumes:
+      - "media_vol:/home/docker/notes/media"
+    environment:
+      # Read by nginx-gen container
+      # Can use multiple subdomains. Example: "host1.domain.com,host2.domain.com"
+      - VIRTUAL_HOST=notes.pvmeasure.com
+      #      - VIRTUAL_NETWORK=webproxy
+      #      - VIRTUAL_PORT=80
+      #      - VIRTUAL_PROTO=http
+
+      # Read by letsencrypt-nginx-proxy-companion container
+      # Can use multiple subdomains. Example: "host1.domain.com,host2.domain.com"
+      - LETSENCRYPT_HOST=notes.pvmeasure.com
+      - LETSENCRYPT_EMAIL=panos.bechlivanos@gmail.com
+    networks:
+      - api-db
+      - webproxy
+    depends_on:
+      - db
+volumes:
+  media_vol:
+    driver: local
+  postgres_data:
+    driver: local
+
+# Isolate this from other docker-compose by joining other networks in externaly
+networks:
+  notes-db:
+    driver: bridge
+  webproxy:
+    external:
+      name: webproxy

@@ -40,11 +40,11 @@ RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 COPY ./docker_configs/nginx-app.conf /etc/nginx/sites-available/default
 COPY ./docker_configs/supervisor-app.conf /etc/supervisor/conf.d/
 
-RUN pip3 install -r /home/docker/pvmeasure/requirements.txt
+RUN pip3 install -r /home/docker/notes/requirements.txt
 
-COPY . /home/docker/pvmeasure/
-RUN mv /home/docker/pvmeasure/pvmeasure/settings_prod.py /home/docker/pvmeasure/pvmeasure/settings.py && \
-    mkdir /var/log/uwsgi/ && mkdir /home/docker/pvmeasure/assets/ && mkdir /home/docker/pvmeasure/logs/
+COPY . /home/docker/notes/
+RUN mv /home/docker/notes/notes/settings_prod.py /home/docker/notes/notes/settings.py && \
+    mkdir /var/log/uwsgi/ && mkdir /home/docker/notes/assets/ && mkdir /home/docker/notes/logs/
 
 EXPOSE 80
 CMD ["supervisord", "-n"]

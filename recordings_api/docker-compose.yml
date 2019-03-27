@@ -2,39 +2,39 @@ version: "3"
 
 services:
   db:
-    container_name: "pvmeasure_db"
+    container_name: "recordings_db"
     image: postgres:11
     restart: always
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=pvmeasure
+      - POSTGRES_DB=recordings
       - POSTGRES_PASSWORD=teiath
     volumes:
       # This folder contains the database data
       - "postgres_data:/var/lib/postgresql/data"
     networks:
-      - api-db
+      - recordings-db
 
-  api:
-    image: pbechliv/pvmeasure_api:latest
-    container_name: "pvmeasure_api"
+  recordings:
+    image: pbechliv/recordings_api:latest
+    container_name: "recordings_api"
     restart: always
     volumes:
-      - "media_vol:/home/docker/renergea/media"
+      - "media_vol:/home/docker/recordings/media"
     environment:
       # Read by nginx-gen container
       # Can use multiple subdomains. Example: "host1.domain.com,host2.domain.com"
-      - VIRTUAL_HOST=api.pvmeasure.com
+      - VIRTUAL_HOST=recordings.pvmeasure.com
       #      - VIRTUAL_NETWORK=webproxy
       #      - VIRTUAL_PORT=80
       #      - VIRTUAL_PROTO=http
 
       # Read by letsencrypt-nginx-proxy-companion container
       # Can use multiple subdomains. Example: "host1.domain.com,host2.domain.com"
-      - LETSENCRYPT_HOST=api.pvmeasure.com
+      - LETSENCRYPT_HOST=recordings.pvmeasure.com
       - LETSENCRYPT_EMAIL=panos.bechlivanos@gmail.com
     networks:
-      - api-db
+      - recordings-db
       - webproxy
     depends_on:
       - db
@@ -46,7 +46,7 @@ volumes:
 
 # Isolate this from other docker-compose by joining other networks in externaly
 networks:
-  api-db:
+  recordings-db:
     driver: bridge
   webproxy:
     external:

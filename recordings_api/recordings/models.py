@@ -5,11 +5,6 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
-def measurement_filepath(self, filename):
-    url = "measurement_recording/{}_{}".format(self.pk, filename)
-    return url
-
-
 class MeasurementGroup(models.Model):
     user = models.ForeignKey(
         User, related_name="measurements", on_delete=models.CASCADE
@@ -28,7 +23,6 @@ class MeasurementRecording(models.Model):
     measuring_point = models.CharField(max_length=250)
     measurements = JSONField(default=list)
     polarity_test = models.BooleanField(default=False)
-    image = models.ImageField(upload_to=measurement_filepath, blank=True)
     comment = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

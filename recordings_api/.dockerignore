@@ -1,0 +1,17 @@
+.git
+.gitignore
+.idea
+.vscode
+.ropeproject
+db.sqlite3
+jupyter
+cheatsheet.txt
+docker-compose-dev.yml
+media
+static
+assets
+database_dumps
+venv
+.dockerignore
+Dockerfile
+docker-compose-dev.yml
