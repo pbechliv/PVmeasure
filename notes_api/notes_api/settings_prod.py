@@ -54,7 +54,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 ]
 
-ROOT_URLCONF = "pvmeasure.urls"
+ROOT_URLCONF = "notes_api.urls"
 
 TEMPLATES = [
     {
@@ -72,7 +72,7 @@ TEMPLATES = [
     }
 ]
 
-WSGI_APPLICATION = "pvmeasure.wsgi.application"
+WSGI_APPLICATION = "notes_api.wsgi.application"
 
 
 # Database
@@ -81,10 +81,10 @@ WSGI_APPLICATION = "pvmeasure.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "pvmeasure",
+        "NAME": "notes",
         "USER": "postgres",
         "PASSWORD": "teiath",
-        "HOST": "pvmeasure_db",
+        "HOST": "notes_db",
         "PORT": "5432",
     }
 }
