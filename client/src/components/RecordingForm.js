@@ -243,21 +243,34 @@ class RecordingForm extends React.Component {
                     onBlur={props.handleBlur}
                   />
                 </Form.Field>
-                <Button
-                  type="button"
-                  color="yellow"
-                  onClick={props.handleReset}
-                  disabled={!props.dirty || props.isSubmitting}
-                >
-                  Reset
-                </Button>
-                <Button
-                  type="submit"
-                  color="black"
-                  disabled={props.isSubmitting}
-                >
-                  Submit
-                </Button>
+                <Button.Group>
+                  <Button
+                    type="submit"
+                    color="black"
+                    disabled={props.isSubmitting}
+                  >
+                    Submit
+                  </Button>
+                  <Button
+                    type="button"
+                    color="yellow"
+                    onClick={props.handleReset}
+                    disabled={!props.dirty || props.isSubmitting}
+                  >
+                    Reset
+                  </Button>
+                  {currentRecording && (
+                    <Button
+                      type="button"
+                      color="blue"
+                      floated="right"
+                      disabled={props.isSubmitting}
+                      onClick={() => this.props.setCurrentRecording(null)}
+                    >
+                      New
+                    </Button>
+                  )}
+                </Button.Group>
               </Form>
             );
           }}
@@ -291,7 +304,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  addRecording: actions.addRecording
+  addRecording: actions.addRecording,
+  setCurrentRecording: actions.setCurrentRecording
 };
 
 export default withRouter(

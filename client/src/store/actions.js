@@ -46,3 +46,23 @@ export const setCurrentRecording = recording => ({
   type: types.SET_CURRENT_RECORDING,
   recording
 });
+
+export const setNotes = notes => ({
+  type: types.SET_NOTES,
+  notes
+});
+
+export const addNote = note => ({
+  type: types.ADD_NOTE,
+  note
+});
+
+export const removeNote = note => ({
+  type: types.REMOVE_NOTE,
+  note
+});
+
+export const setCurrentNote = note => ({
+  type: types.SET_CURRENT_NOTE,
+  note
+});

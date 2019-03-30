@@ -95,17 +95,34 @@ class GroupForm extends React.Component {
                 </Message>
               </Form.Field>
               <Message error>{this.state.formError}</Message>
-              <Button
-                type="button"
-                color="yellow"
-                onClick={props.handleReset}
-                disabled={!props.dirty || props.isSubmitting}
-              >
-                Reset
-              </Button>
-              <Button type="submit" color="black" disabled={props.isSubmitting}>
-                Submit
-              </Button>
+              <Button.Group>
+                <Button
+                  type="submit"
+                  color="black"
+                  disabled={props.isSubmitting}
+                >
+                  Submit
+                </Button>
+                <Button
+                  type="button"
+                  color="yellow"
+                  onClick={props.handleReset}
+                  disabled={!props.dirty || props.isSubmitting}
+                >
+                  Reset
+                </Button>
+                {currentGroup && (
+                  <Button
+                    type="button"
+                    color="blue"
+                    floated="right"
+                    disabled={props.isSubmitting}
+                    onClick={() => this.props.setCurrentGroup(null)}
+                  >
+                    New
+                  </Button>
+                )}
+              </Button.Group>
             </Form>
           );
         }}
@@ -120,7 +137,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  addGroup: actions.addGroup
+  addGroup: actions.addGroup,
+  setCurrentGroup: actions.setCurrentGroup
 };
 
 export default connect(

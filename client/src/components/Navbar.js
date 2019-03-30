@@ -8,8 +8,12 @@ const Navbar = props => {
   return (
     <Menu inverted>
       <Menu.Item name="test" icon as={NavLink} to="/" exact>
-        <Icon name="home" />
-        &nbsp;&nbsp;&nbsp;Home
+        <Icon name="calculator" />
+        &nbsp;&nbsp;&nbsp;Measurements
+      </Menu.Item>
+      <Menu.Item name="test" icon as={NavLink} to="/notes" exact>
+        <Icon name="sticky note" />
+        &nbsp;&nbsp;&nbsp;Notes
       </Menu.Item>
       {/* <Menu.Item name="test" icon as={NavLink} to="/" exact>
         <Icon name="home" />

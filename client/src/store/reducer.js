@@ -8,8 +8,10 @@ const INITIAL_STATE = {
   username: "",
   groups: { count: 0, next: null, previous: null, results: [] },
   recordings: { count: 0, next: null, previous: null, results: [] },
+  notes: { count: 0, next: null, previous: null, results: [] },
   currentGroup: null,
-  currentRecording: null
+  currentRecording: null,
+  currentNote: null
 };
 
 const setAuthStatus = (state, action) => ({
@@ -85,6 +87,39 @@ const setCurrentRecording = (state, action) => ({
   currentRecording: action.recording
 });
 
+const setNotes = (state, action) => ({
+  ...state,
+  notes: action.notes
+});
+
+const addNote = (state, action) => ({
+  ...state,
+  notes: {
+    ...state.notes,
+    count: state.notes.count++,
+    results: [action.note, ...state.notes.results]
+  }
+});
+
+const removeNote = (state, action) => {
+  const newList = [...state.notes.results];
+  const index = newList.findIndex(i => action.note.id === i.id);
+  newList.splice(index, 1);
+  return {
+    ...state,
+    notes: {
+      ...state.notes,
+      count: state.notes.count - 1,
+      results: newList
+    }
+  };
+};
+
+const setCurrentNote = (state, action) => ({
+  ...state,
+  currentNote: action.note
+});
+
 const mainReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case types.SET_AUTH_STATUS:
@@ -105,6 +140,14 @@ const mainReducer = (state = INITIAL_STATE, action) => {
       return removeRecording(state, action);
     case types.SET_CURRENT_RECORDING:
       return setCurrentRecording(state, action);
+    case types.SET_NOTES:
+      return setNotes(state, action);
+    case types.ADD_NOTE:
+      return addNote(state, action);
+    case types.REMOVE_NOTE:
+      return removeNote(state, action);
+    case types.SET_CURRENT_NOTE:
+      return setCurrentNote(state, action);
     default:
       return state;
   }
