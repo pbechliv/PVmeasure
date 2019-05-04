@@ -11,7 +11,7 @@ import RecordingsListPage from "./containers/RecordingsListPage";
 import Navbar from "./components/Navbar";
 import { Container } from "semantic-ui-react";
 import { connect } from "react-redux";
-import 'react-redux-toastr/lib/css/react-redux-toastr.min.css'
+import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 
 const protectedAuthPage = userIsNotAuthenticated(AuthPage);
 const protectedGroupListPage = userIsAuthenticated(GroupListPage);
