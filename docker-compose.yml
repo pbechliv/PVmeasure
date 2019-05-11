@@ -2,20 +2,24 @@ version: "3.7"
 
 services:
   react_app:
+    container_name: pvmeasure_react
     build:
       context: ./client
       dockerfile: dev.Dockerfile
+    image: pbechliv/pvmeasure_react
     ports:
       - 4000:3000
     volumes:
       - ./client/src:/app/src
       - ./client/public:/app/public
   recordings_api:
+    container_name: "pvmeasure_recordings_api"
     build:
       context: ./recordings_api
       dockerfile: dev.Dockerfile
-    # stdin_open: true
-    # tty: true
+    image: pbechliv/pvmeasure_recordings_api
+    stdin_open: true
+    tty: true
     environment:
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=0
@@ -28,9 +32,11 @@ services:
     depends_on:
       - recordings_db
   notes_api:
+    container_name: "pvmeasure_notes_api"
     build:
       context: ./notes_api
       dockerfile: dev.Dockerfile
+    image: pbechliv/pvmeasure_notes_api
     stdin_open: true
     tty: true
     environment:
@@ -45,7 +51,7 @@ services:
     depends_on:
       - notes_db
   recordings_db:
-    container_name: "recordings_db"
+    container_name: "pvmeasure_recordings_db"
     image: postgres:latest
     environment:
       - POSTGRES_USER=postgres
@@ -58,7 +64,7 @@ services:
     networks:
       - recordings
   notes_db:
-    container_name: "notes_db"
+    container_name: "pvmeasure_notes_db"
     image: postgres:latest
     environment:
       - POSTGRES_USER=postgres
