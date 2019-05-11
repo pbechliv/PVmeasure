@@ -2,7 +2,7 @@ appdirs==1.4.3
 attrs==19.1.0
 black==18.9b0
 Click==7.0
-Django==2.2rc1
+Django==2.2.1
 django-cors-headers==2.5.2
 djangorestframework==3.9.2
 djangorestframework-simplejwt==4.1.0

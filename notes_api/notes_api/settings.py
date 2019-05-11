@@ -84,8 +84,8 @@ DATABASES = {
         "NAME": "notes",
         "USER": "postgres",
         "PASSWORD": "teiath",
-        "HOST": "localhost",
-        "PORT": "5433",
+        "HOST": "notes_db",
+        "PORT": "5432",
     }
 }
 
