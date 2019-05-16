@@ -129,6 +129,7 @@ class AuthPage extends Component {
                         </Form.Field>
                         <Message error>{this.state.loginError}</Message>
                         <Button
+                          type="button"
                           floated="left"
                           color="yellow"
                           onClick={handleReset}
