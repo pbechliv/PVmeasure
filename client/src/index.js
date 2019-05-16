@@ -12,7 +12,7 @@ import { readAuthToken } from "./auth/authActions";
 import "semantic-ui-css/semantic.min.css";
 import "./style.css";
 
-export const HOST_URL = "http://localhost:8001";
+export const HOST_URL = `http://${window.location.hostname}:8001`;
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
