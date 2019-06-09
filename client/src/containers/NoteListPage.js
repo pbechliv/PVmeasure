@@ -1,12 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { toastr } from "react-redux-toastr";
-import GroupForm from "../components/GroupForm";
 import { Segment, Header, Grid, Card, Icon } from "semantic-ui-react";
 import { setFetchHeaders } from "../lib";
 import { SERVER2_URL } from "..";
 import * as actions from "../store/actions";
+import NotesForm from "../components/NotesForm";
 
 class NoteListPage extends React.Component {
   constructor(props) {
@@ -51,19 +50,19 @@ class NoteListPage extends React.Component {
   render() {
     return (
       <Grid stackable>
-        <Grid.Column width={4}>
-          <Segment.Group compact>
+        <Grid.Column width={6}>
+          <Segment.Group>
             <Segment inverted color="black">
               <Header> Create a new note</Header>
             </Segment>
             <Segment>
-              <GroupForm />
+              <NotesForm />
             </Segment>
           </Segment.Group>
         </Grid.Column>
-        <Grid.Column width={12}>
+        <Grid.Column width={10}>
           {this.props.notes.results.map((note, index) => (
-            <Card key={`group-${index}`}>
+            <Card fluid key={`group-${index}`}>
               <Card.Content>
                 <Card.Header>
                   {note.title}
@@ -87,6 +86,9 @@ class NoteListPage extends React.Component {
                     <div />
                   </div>
                 </Card.Header>
+                <Card.Meta>
+                  <img src={SERVER2_URL + note.image} alt="" />
+                </Card.Meta>
               </Card.Content>
             </Card>
           ))}

@@ -14,6 +14,8 @@ class NoteViewSet(ModelViewSet):
     serializer_class = NoteSerializer
 
     def get_queryset(self):
-        user = self.request.GET.get("user", None)
-        queryset = Note.objects.filter(user=user).order_by("-created")
+        if self.request.user.is_anonymous:
+            queryset = Note.objects.all().order_by("-created")
+        else:
+            queryset = Note.objects.filter(user=self.request.user).order_by("-created")
         return queryset
