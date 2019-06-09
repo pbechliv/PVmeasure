@@ -4,7 +4,7 @@ import { Grid, Icon, Table } from "semantic-ui-react";
 import { toastr } from "react-redux-toastr";
 import RecordingForm from "../components/RecordingForm";
 import { setFetchHeaders } from "../lib";
-import { HOST_URL } from "..";
+import { SERVER1_URL } from "..";
 import * as actions from "../store/actions";
 
 class RecordingsListPage extends React.Component {
@@ -17,7 +17,7 @@ class RecordingsListPage extends React.Component {
     const headers = setFetchHeaders("GET");
     try {
       const response = await fetch(
-        `${HOST_URL}/measurement_groups/${this.props.match.params.id}/`,
+        `${SERVER1_URL}/measurement_groups/${this.props.match.params.id}/`,
         headers
       );
       if (response.ok) {
@@ -33,7 +33,7 @@ class RecordingsListPage extends React.Component {
     const headers = setFetchHeaders("GET");
     try {
       const response = await fetch(
-        `${HOST_URL}/recordings/?group=${this.props.match.params.id}`,
+        `${SERVER1_URL}/recordings/?group=${this.props.match.params.id}`,
         headers
       );
       if (response.ok) {
@@ -51,7 +51,7 @@ class RecordingsListPage extends React.Component {
         const headers = setFetchHeaders("DELETE");
         try {
           const response = await fetch(
-            `${HOST_URL}/measurement_groups/${recording.id}/`,
+            `${SERVER1_URL}/measurement_groups/${recording.id}/`,
             headers
           );
           if (response.ok) {
@@ -73,7 +73,12 @@ class RecordingsListPage extends React.Component {
         </Grid.Column>
         <Grid.Column width={6}>
           {this.props.recordings.results.map((recording, index) => (
-            <Table compact unstackable textAlign="left" key={`recording-${index}`}>
+            <Table
+              compact
+              unstackable
+              textAlign="left"
+              key={`recording-${index}`}
+            >
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell>Spot</Table.HeaderCell>

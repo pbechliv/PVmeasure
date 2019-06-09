@@ -5,7 +5,7 @@ import { Form, Button, Message, Checkbox, TextArea } from "semantic-ui-react";
 import { Formik, ErrorMessage, FastField, FieldArray } from "formik";
 import { toastr } from "react-redux-toastr";
 import { setFetchHeaders } from "../lib";
-import { HOST_URL } from "..";
+import { SERVER1_URL } from "..";
 import * as actions from "../store/actions";
 
 class RecordingForm extends React.Component {
@@ -24,7 +24,7 @@ class RecordingForm extends React.Component {
     postData.append("polarity_test", values.polarity_test);
     postData.append("comment", values.comment);
     const headers = setFetchHeaders("POST", postData);
-    const response = await fetch(`${HOST_URL}/recordings/`, headers);
+    const response = await fetch(`${SERVER1_URL}/recordings/`, headers);
     if (response.ok) {
       toastr.success("You successfully created a new recording");
       const responseData = await response.json();

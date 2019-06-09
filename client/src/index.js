@@ -12,7 +12,8 @@ import { readAuthToken } from "./auth/authActions";
 import "semantic-ui-css/semantic.min.css";
 import "./style.css";
 
-export const HOST_URL = `http://${window.location.hostname}:8001`;
+export const SERVER1_URL = `http://${window.location.hostname}:8001`;
+export const SERVER2_URL = `http://${window.location.hostname}:8002`;
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

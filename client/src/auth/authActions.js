@@ -1,5 +1,5 @@
 import base64url from "base64url";
-import { HOST_URL } from "../index";
+import { SERVER1_URL } from "../index";
 import * as actions from "../store/actions";
 import { setFetchHeaders } from "../lib";
 
@@ -18,7 +18,7 @@ export const fetchTokenPair = (username, password) => async dispatch => {
   postData.append("username", username);
   postData.append("password", password);
   const headers = setFetchHeaders("POST", postData, true);
-  const response = await fetch(`${HOST_URL}/api/token/`, headers);
+  const response = await fetch(`${SERVER1_URL}/api/token/`, headers);
   if (response.ok) {
     const responseData = await response.json();
     if (responseData.access && responseData.refresh) {
@@ -45,7 +45,7 @@ const refreshTokens = async () => {
   const postData = new FormData();
   postData.append("refresh", localStorage.getItem("refreshToken"));
   const body = setFetchHeaders("POST", postData, true);
-  const response = await fetch(`${HOST_URL}/api/token/refresh/`, body);
+  const response = await fetch(`${SERVER1_URL}/api/token/refresh/`, body);
   if (response.ok) {
     const responseData = await response.json();
     if (responseData.access) {

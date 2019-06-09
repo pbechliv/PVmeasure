@@ -5,7 +5,7 @@ import { Formik, ErrorMessage, FastField } from "formik";
 import { toastr } from "react-redux-toastr";
 import * as actions from "../store/actions";
 import { setFetchHeaders } from "../lib";
-import { HOST_URL } from "..";
+import { SERVER1_URL } from "..";
 
 class GroupForm extends React.Component {
   state = {
@@ -19,7 +19,7 @@ class GroupForm extends React.Component {
     postData.append("date", values.date);
     postData.append("comment", values.comment);
     const headers = setFetchHeaders("POST", postData);
-    const response = await fetch(HOST_URL + "/measurement_groups/", headers);
+    const response = await fetch(SERVER1_URL + "/measurement_groups/", headers);
     if (response.ok) {
       const responseData = await response.json();
       toastr.success("You successfully started a measurement group");

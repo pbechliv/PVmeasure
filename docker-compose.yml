@@ -10,8 +10,7 @@ services:
     ports:
       - 4000:3000
     volumes:
-      - ./client/src:/app/src
-      - ./client/public:/app/public
+      - ./client:/app
   recordings_api:
     container_name: "pvmeasure_recordings_api"
     build:
@@ -25,6 +24,7 @@ services:
       - PYTHONUNBUFFERED=0
     volumes:
       - ./recordings_api:/app
+      - recordings_media:/app/media
     ports:
       - "8001:8001"
     networks:
@@ -44,6 +44,7 @@ services:
       - PYTHONUNBUFFERED=0
     volumes:
       - ./notes_api:/app
+      - notes_media:/app/media
     ports:
       - "8002:8002"
     networks:
@@ -86,4 +87,8 @@ volumes:
   recordings_data:
     driver: local
   notes_data:
+    driver: local
+  recordings_media:
+    driver: local
+  notes_media:
     driver: local

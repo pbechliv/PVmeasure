@@ -5,7 +5,7 @@ import { toastr } from "react-redux-toastr";
 import GroupForm from "../components/GroupForm";
 import { Segment, Header, Grid, Card, Icon } from "semantic-ui-react";
 import { setFetchHeaders } from "../lib";
-import { HOST_URL } from "..";
+import { SERVER1_URL } from "..";
 import * as actions from "../store/actions";
 
 class GroupListPage extends React.Component {
@@ -17,7 +17,10 @@ class GroupListPage extends React.Component {
   async componentDidMount() {
     const headers = setFetchHeaders("GET");
     try {
-      const response = await fetch(`${HOST_URL}/measurement_groups/`, headers);
+      const response = await fetch(
+        `${SERVER1_URL}/measurement_groups/`,
+        headers
+      );
       if (response.ok) {
         const responseData = await response.json();
         this.props.setGroups(responseData);
@@ -33,7 +36,7 @@ class GroupListPage extends React.Component {
         const headers = setFetchHeaders("DELETE");
         try {
           const response = await fetch(
-            `${HOST_URL}/measurement_groups/${group.id}/`,
+            `${SERVER1_URL}/measurement_groups/${group.id}/`,
             headers
           );
           if (response.ok) {

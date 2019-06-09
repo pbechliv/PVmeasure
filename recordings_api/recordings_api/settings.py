@@ -32,9 +32,10 @@ ALLOWED_HOSTS = [
     "localhost",
     "192.168.1.6",
     "localhost:3000",
-    "192.168.99.100:8001",
+    "localhost:4000",
+    "192.168.99.100:3000",
+    "192.168.99.100:4000",
 ]
-
 
 # Application definition
 
