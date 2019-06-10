@@ -1,9 +1,9 @@
 from rest_framework.viewsets import ModelViewSet
-from .serializers import NoteSerializer
-from .models import Note
+from .serializers import FailureSerializer
+from .models import Failure
 
 
-class NoteViewSet(ModelViewSet):
+class FailureViewSet(ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
@@ -11,11 +11,13 @@ class NoteViewSet(ModelViewSet):
     Additionally we also provide an extra `highlight` action.
     """
 
-    serializer_class = NoteSerializer
+    serializer_class = FailureSerializer
 
     def get_queryset(self):
         if self.request.user.is_anonymous:
-            queryset = Note.objects.all().order_by("-created")
+            queryset = Failure.objects.all().order_by("-created")
         else:
-            queryset = Note.objects.filter(user=self.request.user).order_by("-created")
+            queryset = Failure.objects.filter(user=self.request.user).order_by(
+                "-created"
+            )
         return queryset

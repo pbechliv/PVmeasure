@@ -10,12 +10,12 @@
 
 ### 3. Start docker containers
   1. docker-compose up -d
-  2. docker-compose exec notes_api python manage.py makemigrations
-  3. docker-compose exec notes_api python manage.py migrate
-  4. docker-compose exec recordings_api python manage.py makemigrations
-  5. docker-compose exec recordings_api python manage.py migrate
-  6. docker-compose exec recordings_api python manage.py createsuperuser
-  7. docker-compose exec recordings_api python manage.py createsuperuser
+  2. docker-compose exec failures_server python manage.py makemigrations
+  3. docker-compose exec failures_server python manage.py migrate
+  4. docker-compose exec recordings_server python manage.py makemigrations
+  5. docker-compose exec recordings_server python manage.py migrate
+  6. docker-compose exec recordings_server python manage.py createsuperuser
+  7. docker-compose exec recordings_server python manage.py createsuperuser
 
 ### 4. Open app in browser
   1. go to localhost:4000 and enter your username and password

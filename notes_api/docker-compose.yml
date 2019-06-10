@@ -16,8 +16,8 @@ services:
       - notes-db
 
   api:
-    image: pbechliv/notes_api:latest
-    container_name: "notes_api"
+    image: pbechliv/failures_server:latest
+    container_name: "failures_server"
     restart: always
     volumes:
       - "media_vol:/home/docker/notes/media"

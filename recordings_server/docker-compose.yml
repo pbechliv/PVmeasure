@@ -16,8 +16,8 @@ services:
       - recordings-db
 
   recordings:
-    image: pbechliv/recordings_api:latest
-    container_name: "recordings_api"
+    image: pbechliv/recordings_server:latest
+    container_name: "recordings_server"
     restart: always
     volumes:
       - "media_vol:/home/docker/recordings/media"

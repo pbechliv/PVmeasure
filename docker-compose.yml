@@ -11,19 +11,19 @@ services:
       - 4000:3000
     volumes:
       - ./client:/app
-  recordings_api:
-    container_name: "pvmeasure_recordings_api"
+  recordings_server:
+    container_name: "pvmeasure_recordings_server"
     build:
-      context: ./recordings_api
+      context: ./recordings_server
       dockerfile: dev.Dockerfile
-    image: pbechliv/pvmeasure_recordings_api
+    image: pbechliv/pvmeasure_recordings_server
     stdin_open: true
     tty: true
     environment:
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=0
     volumes:
-      - ./recordings_api:/app
+      - ./recordings_server:/app
       - recordings_media:/app/media
     ports:
       - "8001:8001"
@@ -31,19 +31,19 @@ services:
       - recordings
     depends_on:
       - recordings_db
-  notes_api:
-    container_name: "pvmeasure_notes_api"
+  failures_server:
+    container_name: "pvmeasure_failures_server"
     build:
-      context: ./notes_api
+      context: ./failures_server
       dockerfile: dev.Dockerfile
-    image: pbechliv/pvmeasure_notes_api
+    image: pbechliv/pvmeasure_failures_server
     stdin_open: true
     tty: true
     environment:
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=0
     volumes:
-      - ./notes_api:/app
+      - ./failures_server:/app
       - notes_media:/app/media
     ports:
       - "8002:8002"
