@@ -89,10 +89,10 @@ WSGI_APPLICATION = "recordings_server.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "recordings",
-        "USER": "postgres",
-        "PASSWORD": "teiath",
-        "HOST": "recordings_db",
+        "NAME": "pvmeasure",
+        "USER": "pvmeasure",
+        "PASSWORD": "pvmeasure",
+        "HOST": "db",
         "PORT": "5432",
     }
 }

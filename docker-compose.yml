@@ -28,9 +28,9 @@ services:
     ports:
       - "8001:8001"
     networks:
-      - recordings
+      - db
     depends_on:
-      - recordings_db
+      - db
   failures_server:
     container_name: "pvmeasure_failures_server"
     build:
@@ -44,51 +44,33 @@ services:
       - PYTHONUNBUFFERED=0
     volumes:
       - ./failures_server:/app
-      - notes_media:/app/media
+      - failures_media:/app/media
     ports:
       - "8002:8002"
     networks:
-      - notes
+      - db
     depends_on:
-      - notes_db
-  recordings_db:
-    container_name: "pvmeasure_recordings_db"
+      - db
+  db:
+    container_name: "pvmeasure_db"
     image: postgres:latest
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=recordings
-      - POSTGRES_PASSWORD=teiath
+      - POSTGRES_USER=pvmeasure
+      - POSTGRES_PASSWORD=pvmeasure
     volumes:
-      - "recordings_data:/var/lib/postgresql/data"
+      - "db_data:/var/lib/postgresql/data"
     ports:
       - "5432:5432"
     networks:
-      - recordings
-  notes_db:
-    container_name: "pvmeasure_notes_db"
-    image: postgres:latest
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=notes
-      - POSTGRES_PASSWORD=teiath
-    volumes:
-      - "notes_data:/var/lib/postgresql/data"
-    ports:
-      - "5433:5432"
-    networks:
-      - notes
+      - db
 networks:
-  recordings:
-    driver: bridge
-  notes:
+  db:
     driver: bridge
 
 volumes:
-  recordings_data:
-    driver: local
-  notes_data:
+  db_data:
     driver: local
   recordings_media:
     driver: local
-  notes_media:
+  failures_media:
     driver: local

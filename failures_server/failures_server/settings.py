@@ -90,10 +90,10 @@ WSGI_APPLICATION = "failures_server.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "failures",
-        "USER": "postgres",
-        "PASSWORD": "teiath",
-        "HOST": "failures_db",
+        "NAME": "pvmeasure",
+        "USER": "pvmeasure",
+        "PASSWORD": "pvmeasure",
+        "HOST": "db",
         "PORT": "5432",
     }
 }
