@@ -16,3 +16,5 @@ pyflakes==2.1.1
 pytz==2019.1
 sqlparse==0.3.0
 toml==0.10.0
+requests==2.22.0
+pandas==0.24.2
