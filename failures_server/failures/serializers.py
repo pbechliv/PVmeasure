@@ -1,8 +1,14 @@
-from .models import Note
+from .models import Failure, Plant
 from rest_framework import serializers
+
+
+class PlantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Plant
+        fields = "__all__"
 
 
 class FailureSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Note
+        model = Failure
         fields = "__all__"

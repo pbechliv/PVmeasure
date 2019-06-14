@@ -71,7 +71,7 @@ def pvgis_save(self):
 
 
 class Plant(models.Model):
-    user = models.ForeignKey(User, related_name="plants")
+    user = models.ForeignKey(User, related_name="plants", on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     nominal_power = models.FloatField(validators=[MinValueValidator(0.0)])
     commissioning_date = models.DateField()
