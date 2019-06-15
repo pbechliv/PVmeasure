@@ -15,26 +15,6 @@ def image_filepath(self, filename):
 
 # energy_yield
 def pvgis_save(self):
-    fixed_value = 0
-    optimalangles_value = 0
-    inclined_axis_value = 0
-    inclined_optimum_value = 0
-    vertical_axis_value = 0
-    vertical_optimum_value = 0
-    twoaxis_value = 0
-    skiprows_value = 7
-    if self.mounting == "fixed":
-        fixed_value = 1
-        optimalangles_value = 1
-    elif self.mounting == "inclined_axis":
-        inclined_axis_value = 1
-        inclined_optimum_value = 1
-    elif self.mounting == "vertical_axis":
-        vertical_axis_value = 1
-        vertical_optimum_value = 1
-    else:
-        twoaxis_value = 1
-        skiprows_value = 6
     url = "http://re.jrc.ec.europa.eu/pvgis5/PVcalc.php"
     params = {
         "lat": self.latitude,
@@ -42,15 +22,15 @@ def pvgis_save(self):
         "usehorizon": 1,
         "raddatabase": "PVGIS-SARAH",
         "peakpower": self.nominal_power,
-        "pvtechchoice": self.pv_technology,
-        "loss": self.system_losses,
-        "fixed": fixed_value,
-        "optimalangles": optimalangles_value,
-        "inclined_axis": inclined_axis_value,
-        "inclined_optimum": inclined_optimum_value,
-        "vertical_axis": vertical_axis_value,
-        "vertical_optimum": vertical_optimum_value,
-        "twoaxis": twoaxis_value,
+        "pvtechchoice": "Unknown",
+        "loss": 14,
+        "fixed": 1,
+        "optimalangles": 0,
+        "inclined_axis": 0,
+        "inclined_optimum": 0,
+        "vertical_axis": 0,
+        "vertical_optimum": 0,
+        "twoaxis": 0,
     }
 
     r = requests.get(url, params=params).text
@@ -61,7 +41,7 @@ def pvgis_save(self):
         engine="python",
         sep="\t",
         header=1,
-        skiprows=skiprows_value,
+        skiprows=7,
         skipfooter=11,
     )
 
@@ -78,10 +58,6 @@ class Plant(models.Model):
     feed_in_tariff = models.FloatField(
         validators=[MinValueValidator(0.0), MaxValueValidator(1.0)]
     )
-    inverter_type = models.CharField(max_length=100, default="unknown")
-    pv_technology = models.CharField(max_length=100, default="unknown")
-    system_losses = models.FloatField(default=14.0)
-    mounting = models.CharField(max_length=100, default="fixed")
     longitude = models.DecimalField(
         max_digits=8,
         decimal_places=3,
@@ -137,35 +113,8 @@ def ecfl_method(self):
         * self.percentage
         * 10 ** -2
     )
-    ecfl = 0
 
-    # ecfr: the estimated cost to replace the module
-    component_cost = 0
-    if self.component == 1:
-        if self.plant.pv_technology == "crystSi":
-            component_cost = 0
-        elif self.plant.pv_technology == "CIS":
-            component_cost = 0
-        elif self.plant.pv_technology == "CdTe":
-            component_cost = 0
-        else:
-            component_cost = 0
-    elif self.component == 4:
-        if self.plant.inverter_type == "Unknown":
-            component_cost = 0
-        elif self.plant.inverter_type == "string_inverter":
-            component_cost = 0
-        elif self.plant.inverter_type == "central_inverter":
-            component_cost = 0
-    else:
-        component_cost = 0
-
-    ecfr = (
-        self.plant.nominal_power * self.percentage * 10 ** -2 * (component_cost * 1000)
-    )
-
-    time_before_detect = 0
-    return ecfl, ecfl_y, ecfr, performance_losses, time_before_detect
+    return ecfl_y
 
 
 class Failure(models.Model):
@@ -179,16 +128,10 @@ class Failure(models.Model):
     percentage = models.FloatField(
         validators=[MinValueValidator(0), MaxValueValidator(100)], default=0
     )
-    ecfl = models.FloatField(default=0, editable=False)
     ecfl_y = models.FloatField(default=0, editable=False)
-    ecfr = models.FloatField(default=0, editable=False)
-    time_before_detect = models.FloatField(default=0.99999, editable=False)
-    performance_losses = models.FloatField(default=0.00001, editable=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
-        self.ecfl, self.ecfl_y, self.ecfr, self.performance_losses, self.time_before_detect = ecfl_method(
-            self
-        )
+        self.ecfl_y = ecfl_method(self)
         super(Failure, self).save()

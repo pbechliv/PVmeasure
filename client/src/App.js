@@ -10,13 +10,13 @@ import GroupListPage from "./containers/GroupListPage";
 import RecordingsListPage from "./containers/RecordingsListPage";
 import Navbar from "./components/Navbar";
 import { Container } from "semantic-ui-react";
-import NotesListPage from "./containers/NoteListPage";
 import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
+import FailuresPage from "./containers/FailuresPage";
 
 const protectedAuthPage = userIsNotAuthenticated(AuthPage);
 const protectedGroupListPage = userIsAuthenticated(GroupListPage);
 const protectedRecordingsListPage = userIsAuthenticated(RecordingsListPage);
-const protectedNotesListPage = userIsAuthenticated(NotesListPage);
+const protectedFailuresPage = userIsAuthenticated(FailuresPage);
 
 const App = props => {
   return (
@@ -31,7 +31,7 @@ const App = props => {
             exact
             component={protectedRecordingsListPage}
           />
-          <Route path="/notes" exact component={protectedNotesListPage} />
+          <Route path="/failures" exact component={protectedFailuresPage} />
         </Switch>
       </Container>
     </>

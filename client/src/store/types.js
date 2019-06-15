@@ -9,7 +9,7 @@ export const ADD_RECORDING = "ADD_RECORDING";
 export const REMOVE_RECORDING = "REMOVE_RECORDING";
 export const SET_CURRENT_RECORDING = "SET_CURRENT_RECORDING";
 
-export const SET_NOTES = "SET_NOTES";
-export const ADD_NOTE = "ADD_NOTE";
-export const REMOVE_NOTE = "REMOVE_NOTE";
-export const SET_CURRENT_NOTE = "SET_CURRENT_NOTE";
+export const SET_PLANTS = "SET_PLANTS";
+export const ADD_PLANT = "ADD_PLANT";
+export const REMOVE_PLANT = "REMOVE_PLANT";
+export const SET_CURRENT_PLANT = "SET_CURRENT_PLANT";

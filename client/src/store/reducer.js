@@ -2,16 +2,18 @@ import { combineReducers } from "redux";
 import { reducer as toastrReducer } from "react-redux-toastr";
 import * as types from "./types";
 
+const defaultServerList = { count: 0, next: null, previous: null, results: [] };
+
 const INITIAL_STATE = {
   isAuthenticated: false,
   userId: null,
   username: "",
-  groups: { count: 0, next: null, previous: null, results: [] },
-  recordings: { count: 0, next: null, previous: null, results: [] },
-  notes: { count: 0, next: null, previous: null, results: [] },
+  groups: { ...defaultServerList },
+  recordings: { ...defaultServerList },
+  plants: { ...defaultServerList },
   currentGroup: null,
   currentRecording: null,
-  currentNote: null
+  currentPlant: null
 };
 
 const setAuthStatus = (state, action) => ({
@@ -87,37 +89,37 @@ const setCurrentRecording = (state, action) => ({
   currentRecording: action.recording
 });
 
-const setNotes = (state, action) => ({
+const setPlants = (state, action) => ({
   ...state,
-  notes: action.notes
+  plants: action.plants
 });
 
-const addNote = (state, action) => ({
+const addPlant = (state, action) => ({
   ...state,
-  notes: {
-    ...state.notes,
-    count: state.notes.count++,
-    results: [action.note, ...state.notes.results]
+  plants: {
+    ...state.plants,
+    count: state.plants.count++,
+    results: [action.plant, ...state.plants.results]
   }
 });
 
-const removeNote = (state, action) => {
-  const newList = [...state.notes.results];
-  const index = newList.findIndex(i => action.note.id === i.id);
+const removePlant = (state, action) => {
+  const newList = [...state.plants.results];
+  const index = newList.findIndex(i => action.plant.id === i.id);
   newList.splice(index, 1);
   return {
     ...state,
-    notes: {
-      ...state.notes,
-      count: state.notes.count - 1,
+    plants: {
+      ...state.plants,
+      count: state.plants.count - 1,
       results: newList
     }
   };
 };
 
-const setCurrentNote = (state, action) => ({
+const setCurrentPlant = (state, action) => ({
   ...state,
-  currentNote: action.note
+  currentPlant: action.plant
 });
 
 const mainReducer = (state = INITIAL_STATE, action) => {
@@ -140,14 +142,14 @@ const mainReducer = (state = INITIAL_STATE, action) => {
       return removeRecording(state, action);
     case types.SET_CURRENT_RECORDING:
       return setCurrentRecording(state, action);
-    case types.SET_NOTES:
-      return setNotes(state, action);
-    case types.ADD_NOTE:
-      return addNote(state, action);
-    case types.REMOVE_NOTE:
-      return removeNote(state, action);
-    case types.SET_CURRENT_NOTE:
-      return setCurrentNote(state, action);
+    case types.SET_PLANTS:
+      return setPlants(state, action);
+    case types.ADD_PLANT:
+      return addPlant(state, action);
+    case types.REMOVE_PLANT:
+      return removePlant(state, action);
+    case types.SET_CURRENT_PLANT:
+      return setCurrentPlant(state, action);
     default:
       return state;
   }

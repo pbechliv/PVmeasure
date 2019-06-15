@@ -47,22 +47,22 @@ export const setCurrentRecording = recording => ({
   recording
 });
 
-export const setNotes = notes => ({
-  type: types.SET_NOTES,
-  notes
+export const setPlants = plants => ({
+  type: types.SET_PLANTS,
+  plants
 });
 
-export const addNote = note => ({
-  type: types.ADD_NOTE,
-  note
+export const addPlant = plant => ({
+  type: types.ADD_PLANT,
+  plant
 });
 
-export const removeNote = note => ({
-  type: types.REMOVE_NOTE,
-  note
+export const removePlant = plant => ({
+  type: types.REMOVE_PLANT,
+  plant
 });
 
-export const setCurrentNote = note => ({
-  type: types.SET_CURRENT_NOTE,
-  note
+export const setCurrentPlant = plant => ({
+  type: types.SET_CURRENT_PLANT,
+  plant
 });
