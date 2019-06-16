@@ -40,6 +40,21 @@ class PlantForm extends React.Component {
     if (!values.name) {
       errors.name = "This field may not be blank.";
     }
+    if (!values.commissioning_date) {
+      errors.commissioning_date = "This field may not be blank.";
+    }
+    if (!values.nominal_power) {
+      errors.nominal_power = "This field may not be blank.";
+    }
+    if (!values.feed_in_tariff) {
+      errors.feed_in_tariff = "This field may not be blank.";
+    }
+    if (!values.longitude) {
+      errors.longitude = "This field may not be blank.";
+    }
+    if (!values.latitude) {
+      errors.latitude = "This field may not be blank.";
+    }
     return errors;
   }
 
@@ -78,35 +93,35 @@ class PlantForm extends React.Component {
                   <ErrorMessage name="name" />
                 </Message>
               </Form.Field>
-              <Form.Field>
+              <Form.Field required>
                 <label>Commissioning Date</label>
                 <FastField name="commissioning_date" type="date" />
                 <Message error>
                   <ErrorMessage name="commissioning_date" />
                 </Message>
               </Form.Field>
-              <Form.Field>
+              <Form.Field required>
                 <label>Nominal Power</label>
                 <FastField name="nominal_power" type="number" step="0.1" />
                 <Message error>
                   <ErrorMessage name="nominal_power" />
                 </Message>
               </Form.Field>
-              <Form.Field>
+              <Form.Field required>
                 <label>Feed-in Tariff</label>
                 <FastField name="feed_in_tariff" type="number" step="0.1" />
                 <Message error>
                   <ErrorMessage name="feed_in_tariff" />
                 </Message>
               </Form.Field>
-              <Form.Field>
+              <Form.Field required>
                 <label>Longitude</label>
                 <FastField name="longitude" type="number" step="0.1" />
                 <Message error>
                   <ErrorMessage name="longitude" />
                 </Message>
               </Form.Field>
-              <Form.Field>
+              <Form.Field required>
                 <label>Latitude</label>
                 <FastField name="latitude" type="number" step="0.1" />
                 <Message error>
