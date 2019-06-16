@@ -4,7 +4,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 import requests
 import pandas as pd
 import io
-import datetime
+from datetime import datetime as dt
 import numpy
 
 
@@ -82,7 +82,7 @@ def ecfl_method(self):
     calculates the time that we need to detect the failure
     """
 
-    now = datetime.now()
+    now = dt.now()
 
     # number of operation years and months
     total_months = (
@@ -119,10 +119,7 @@ def ecfl_method(self):
 
 class Failure(models.Model):
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
-    spot = models.CharField(max_length=250, blank=True)
-    component = models.IntegerField()
-    sub_component = models.IntegerField()
-    spot = models.CharField(max_length=250)
+    name = models.CharField(max_length=250)
     performance_losses_mean = models.FloatField()
     performance_losses_sigma = models.FloatField()
     percentage = models.FloatField(

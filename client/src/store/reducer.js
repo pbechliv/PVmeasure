@@ -125,6 +125,44 @@ const setCurrentPlant = (state, action) => ({
   currentPlant: action.plant
 });
 
+const setCurrentFailuresPlant = (state, action) => ({
+  ...state,
+  currentFailuresPlant: action.plant
+});
+
+const setFailures = (state, action) => ({
+  ...state,
+  failures: action.failures
+});
+
+const addFailure = (state, action) => ({
+  ...state,
+  failures: {
+    ...state.failures,
+    count: state.failures.count++,
+    results: [action.failure, ...state.failures.results]
+  }
+});
+
+const removeFailure = (state, action) => {
+  const newList = [...state.failures.results];
+  const index = newList.findIndex(i => action.failure.id === i.id);
+  newList.splice(index, 1);
+  return {
+    ...state,
+    failures: {
+      ...state.failures,
+      count: state.failures.count - 1,
+      results: newList
+    }
+  };
+};
+
+const setCurrentFailure = (state, action) => ({
+  ...state,
+  currentFailure: action.failure
+});
+
 const mainReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case types.SET_AUTH_STATUS:
@@ -153,6 +191,16 @@ const mainReducer = (state = INITIAL_STATE, action) => {
       return removePlant(state, action);
     case types.SET_CURRENT_PLANT:
       return setCurrentPlant(state, action);
+    case types.SET_CURRENT_FAILURES_PLANT:
+      return setCurrentFailuresPlant(state, action);
+    case types.SET_FAILURES:
+      return setFailures(state, action);
+    case types.ADD_FAILURE:
+      return addFailure(state, action);
+    case types.REMOVE_FAILURE:
+      return removeFailure(state, action);
+    case types.SET_CURRENT_FAILURE:
+      return setCurrentFailure(state, action);
     default:
       return state;
   }

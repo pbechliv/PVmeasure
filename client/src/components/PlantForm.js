@@ -101,14 +101,14 @@ class PlantForm extends React.Component {
                 </Message>
               </Form.Field>
               <Form.Field required>
-                <label>Nominal Power</label>
+                <label>Nominal Power (kW)</label>
                 <FastField name="nominal_power" type="number" step="0.1" />
                 <Message error>
                   <ErrorMessage name="nominal_power" />
                 </Message>
               </Form.Field>
               <Form.Field required>
-                <label>Feed-in Tariff</label>
+                <label>Feed-in Tariff (€)</label>
                 <FastField name="feed_in_tariff" type="number" step="0.1" />
                 <Message error>
                   <ErrorMessage name="feed_in_tariff" />
