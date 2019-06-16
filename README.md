@@ -1,8 +1,8 @@
 # First time setup
 
 ### 1. Install Requirements
-  * [git](https://git-scm.com/downloads)
-  * [docker desktop](https://www.docker.com/get-started)
+  * [docker](https://www.docker.com/get-started)
+  * If you are using windows 10 home or older version you need to install docker toolbox instead
 
 ### 2. Clone repository
   1. Open a terminal and type <b>git clone https://.github.com/pbechliv/PVmeasure.git</b>
@@ -15,7 +15,6 @@
   4. docker-compose exec recordings_server python manage.py makemigrations
   5. docker-compose exec recordings_server python manage.py migrate
   6. docker-compose exec recordings_server python manage.py createsuperuser
-  7. docker-compose exec recordings_server python manage.py createsuperuser
 
 ### 4. Open app in browser
   1. go to localhost:4000 and enter your username and password
