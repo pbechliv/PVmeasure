@@ -107,10 +107,12 @@ class FailuresPage extends React.Component {
     });
   }
 
+  getPlantById(id) {
+    return this.props.plants.results.find(p => p.id == id);
+  }
+
   render() {
-    const pagePlant = this.props.plants.results.find(
-      p => p.id == this.props.match.params.id
-    );
+    const pagePlant = this.getPlantById(this.props.match.params.id);
     return (
       <Grid stackable>
         {/* LIST AND FORM OF PLANTS */}
@@ -190,6 +192,12 @@ class FailuresPage extends React.Component {
                             }}
                           />
                         </Card.Header>
+                        <Card.Meta>
+                          Nominal Power: {plant.nominal_power} kW
+                        </Card.Meta>
+                        <Card.Meta>
+                          Com. date: {plant.commissioning_date}
+                        </Card.Meta>
                       </Card.Content>
                     </Card>
                   ))}
@@ -235,7 +243,12 @@ class FailuresPage extends React.Component {
                           }}
                         />
                       </Card.Header>
-
+                      {!this.props.match.params.id && (
+                        <Card.Meta>
+                          {this.getPlantById(failure.plant) &&
+                            this.getPlantById(failure.plant).name}
+                        </Card.Meta>
+                      )}
                       <Card.Description>
                         <Popup
                           trigger={

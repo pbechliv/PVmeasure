@@ -75,7 +75,6 @@ class GroupListPage extends React.Component {
                     style={{ display: "inline-block" }}
                   >
                     {group.name ? group.name : "Recordings"}
-                    {group.date ? ` - ${group.date}` : ""}
                   </Link>
                   <CardActions
                     pullRight
@@ -84,8 +83,9 @@ class GroupListPage extends React.Component {
                       this.props.setCurrentGroup(group);
                     }}
                   />
-                  <p>{group.comment}</p>
                 </Card.Header>
+                <Card.Meta>{group.date ? group.date : ""}</Card.Meta>
+                <Card.Description>{group.comment}</Card.Description>
               </Card.Content>
             </Card>
           ))}
