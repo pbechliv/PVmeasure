@@ -6,6 +6,7 @@ import RecordingForm from "../components/RecordingForm";
 import { setFetchHeaders } from "../lib";
 import { SERVER1_URL } from "..";
 import * as actions from "../store/actions";
+import CardActions from "../components/CardActions";
 
 class RecordingsListPage extends React.Component {
   async componentDidMount() {
@@ -106,24 +107,12 @@ class RecordingsListPage extends React.Component {
                   </Table.Cell>
                   <Table.Cell>{recording.comment}</Table.Cell>
                   <Table.Cell textAlign="center">
-                    <div style={{ marginBottom: "10px" }}>
-                      <Icon
-                        onClick={() =>
-                          this.props.setCurrentRecording(recording)
-                        }
-                        link
-                        color="orange"
-                        name="edit"
-                      />
-                    </div>
-                    <div>
-                      <Icon
-                        onClick={() => this.props.deleteRecording(recording)}
-                        link
-                        color="red"
-                        name="remove"
-                      />
-                    </div>
+                    <CardActions
+                      deleteAction={() => this.deleteRecording(recording)}
+                      editAction={() => {
+                        this.props.setCurrentRecording(recording);
+                      }}
+                    />
                   </Table.Cell>
                 </Table.Row>
               </Table.Body>

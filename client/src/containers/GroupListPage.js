@@ -7,6 +7,7 @@ import { Segment, Header, Grid, Card, Icon } from "semantic-ui-react";
 import { setFetchHeaders } from "../lib";
 import { SERVER1_URL } from "..";
 import * as actions from "../store/actions";
+import CardActions from "../components/CardActions";
 
 class GroupListPage extends React.Component {
   constructor(props) {
@@ -76,25 +77,13 @@ class GroupListPage extends React.Component {
                     {group.name ? group.name : "Recordings"}
                     {group.date ? ` - ${group.date}` : ""}
                   </Link>
-                  <div style={{ float: "right", display: "inline-block" }}>
-                    <div style={{ marginBottom: "10px" }}>
-                      <Icon
-                        link
-                        name="edit"
-                        color="orange"
-                        onClick={() => this.props.setCurrentGroup(group)}
-                      />
-                    </div>
-                    <div>
-                      <Icon
-                        link
-                        name="remove"
-                        color="red"
-                        onClick={() => this.deleteGroup(group)}
-                      />
-                    </div>
-                    <div />
-                  </div>
+                  <CardActions
+                    pullRight
+                    deleteAction={() => this.deleteGroup(group)}
+                    editAction={() => {
+                      this.props.setCurrentGroup(group);
+                    }}
+                  />
                   <p>{group.comment}</p>
                 </Card.Header>
               </Card.Content>

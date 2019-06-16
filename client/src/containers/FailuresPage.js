@@ -16,6 +16,7 @@ import { SERVER2_URL } from "..";
 import * as actions from "../store/actions";
 import PlantForm from "../components/PlantForm";
 import FailureForm from "../components/FailureForm";
+import CardActions from "../components/CardActions";
 
 class FailuresPage extends React.Component {
   constructor(props) {
@@ -180,29 +181,14 @@ class FailuresPage extends React.Component {
                             {plant.name ? plant.name : "Recordings"}
                             {plant.date ? ` - ${plant.commissioning_date}` : ""}
                           </Link>
-                          <div
-                            style={{ float: "right", display: "inline-block" }}
-                          >
-                            <div style={{ marginBottom: "10px" }}>
-                              <Icon
-                                link
-                                name="edit"
-                                color="orange"
-                                onClick={() =>
-                                  this.props.setCurrentPlant(plant)
-                                }
-                              />
-                            </div>
-                            <div>
-                              <Icon
-                                link
-                                name="remove"
-                                color="red"
-                                onClick={() => this.deletePlant(plant)}
-                              />
-                            </div>
-                            <div />
-                          </div>
+                          <CardActions
+                            pullRight
+                            deleteAction={() => this.deletePlant(plant)}
+                            editAction={() => {
+                              this.setState({ plantFormOpen: true });
+                              this.props.setCurrentPlant(plant);
+                            }}
+                          />
                         </Card.Header>
                       </Card.Content>
                     </Card>
@@ -237,29 +223,17 @@ class FailuresPage extends React.Component {
                         >
                           {failure.name}
                         </span>
-                        <div
-                          style={{ float: "right", display: "inline-block" }}
-                        >
-                          <div style={{ marginBottom: "10px" }}>
-                            <Icon
-                              link
-                              name="edit"
-                              color="orange"
-                              onClick={() =>
-                                this.props.setCurrentFailure(failure)
-                              }
-                            />
-                          </div>
-                          <div>
-                            <Icon
-                              link
-                              name="remove"
-                              color="red"
-                              onClick={() => this.deleteFailure(failure)}
-                            />
-                          </div>
-                          <div />
-                        </div>
+                        <CardActions
+                          pullRight
+                          deleteAction={() => this.deleteFailure(failure)}
+                          editAction={() => {
+                            this.props.history.push(
+                              `/failures/${failure.plant}`
+                            );
+                            this.fetchFailures(failure.plant);
+                            this.props.setCurrentFailure(failure);
+                          }}
+                        />
                       </Card.Header>
 
                       <Card.Description>
