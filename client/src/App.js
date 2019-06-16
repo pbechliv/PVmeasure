@@ -32,6 +32,7 @@ const App = props => {
             component={protectedRecordingsListPage}
           />
           <Route path="/failures" exact component={protectedFailuresPage} />
+          <Route path="/failures/:id" exact component={protectedFailuresPage} />
         </Switch>
       </Container>
     </>

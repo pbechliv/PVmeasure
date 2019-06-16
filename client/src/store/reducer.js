@@ -11,9 +11,12 @@ const INITIAL_STATE = {
   groups: { ...defaultServerList },
   recordings: { ...defaultServerList },
   plants: { ...defaultServerList },
+  failures: { ...defaultServerList },
   currentGroup: null,
   currentRecording: null,
-  currentPlant: null
+  currentPlant: null,
+  currentFailuresPlant: null,
+  currentFailure: null
 };
 
 const setAuthStatus = (state, action) => ({

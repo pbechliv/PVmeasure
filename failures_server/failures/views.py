@@ -22,6 +22,7 @@ class FailureViewSet(ModelViewSet):
         if plant:
             queryset = Failure.objects.filter(plant=plant).order_by("-created")
         else:
-            queryset = Failure.objects.all().order_by("-created")
+            plants = Plant.objects.filter(user=self.request.user)
+            queryset = Failure.objects.filter(plant__in=plants).order_by("-created")
 
         return queryset

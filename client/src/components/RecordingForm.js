@@ -243,7 +243,7 @@ class RecordingForm extends React.Component {
                     onBlur={props.handleBlur}
                   />
                 </Form.Field>
-                <Button.Group>
+                <Button.Group fluid>
                   <Button
                     type="submit"
                     color="black"
@@ -262,7 +262,7 @@ class RecordingForm extends React.Component {
                   {currentRecording && (
                     <Button
                       type="button"
-                      color="blue"
+                      color="green"
                       floated="right"
                       disabled={props.isSubmitting}
                       onClick={() => this.props.setCurrentRecording(null)}

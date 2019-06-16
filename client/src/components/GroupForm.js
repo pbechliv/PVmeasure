@@ -95,7 +95,7 @@ class GroupForm extends React.Component {
                 </Message>
               </Form.Field>
               <Message error>{this.state.formError}</Message>
-              <Button.Group>
+              <Button.Group fluid>
                 <Button
                   type="submit"
                   color="black"
@@ -114,7 +114,7 @@ class GroupForm extends React.Component {
                 {currentGroup && (
                   <Button
                     type="button"
-                    color="blue"
+                    color="green"
                     floated="right"
                     disabled={props.isSubmitting}
                     onClick={() => this.props.setCurrentGroup(null)}

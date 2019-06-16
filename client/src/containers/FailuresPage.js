@@ -2,8 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { toastr } from "react-redux-toastr";
-import GroupForm from "../components/GroupForm";
-import { Segment, Header, Grid, Card, Icon, Message } from "semantic-ui-react";
+import { Segment, Header, Grid, Card, Icon } from "semantic-ui-react";
 import { setFetchHeaders } from "../lib";
 import { SERVER2_URL } from "..";
 import * as actions from "../store/actions";
@@ -13,7 +12,8 @@ class FailuresPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      plantFormOpen: false
+      plantFormOpen: false,
+      plantListOpen: false
     };
   }
 
@@ -57,13 +57,18 @@ class FailuresPage extends React.Component {
         <Grid.Column width={4}>
           <Segment.Group>
             <Segment inverted color="black">
-              <Header style={{ display: "inline-block", margin: 0 }}>
+              <Header sub style={{ display: "inline-block", margin: 0 }}>
                 Create a new PV plant
               </Header>
               <Icon
                 link
                 style={{ float: "right" }}
-                name={this.state.plantFormOpen ? "caret up" : "caret down"}
+                name={
+                  this.state.plantFormOpen
+                    ? "caret square up outline"
+                    : "caret square down outline"
+                }
+                size="large"
                 onClick={() =>
                   this.setState({ plantFormOpen: !this.state.plantFormOpen })
                 }
@@ -75,42 +80,77 @@ class FailuresPage extends React.Component {
               </Segment>
             )}
           </Segment.Group>
-          <Segment>
-            {this.props.plants.results.map((plant, index) => (
-              <Card key={`plant-${index}`}>
-                <Card.Content>
-                  <Card.Header>
-                    <span
-                      onClick={() => this.props.setCurrentPlant(plant)}
-                      style={{ display: "inline-block", cursor: "pointer" }}
-                    >
-                      {plant.name ? plant.name : "Recordings"}
-                      {plant.date ? ` - ${plant.commissioning_date}` : ""}
-                    </span>
-                    <div style={{ float: "right", display: "inline-block" }}>
-                      <div style={{ marginBottom: "10px" }}>
-                        <Icon
-                          link
-                          name="edit"
-                          color="orange"
-                          onClick={() => this.props.setCurrentPlant(plant)}
-                        />
-                      </div>
-                      <div>
-                        <Icon
-                          link
-                          name="remove"
-                          color="red"
-                          onClick={() => this.deletePlant(plant)}
-                        />
-                      </div>
-                      <div />
-                    </div>
-                  </Card.Header>
-                </Card.Content>
-              </Card>
-            ))}
-          </Segment>
+          {this.props.plants.results.length > 0 && (
+            <Segment.Group>
+              <Segment inverted color="black">
+                <Header sub style={{ display: "inline-block", margin: 0 }}>
+                  Choose a PV plant
+                </Header>
+                <Icon
+                  link
+                  style={{ float: "right" }}
+                  name={
+                    this.state.plantListOpen
+                      ? "caret square up outline"
+                      : "caret square down outline"
+                  }
+                  size="large"
+                  onClick={() =>
+                    this.setState({ plantListOpen: !this.state.plantListOpen })
+                  }
+                />
+              </Segment>
+              {this.state.plantListOpen && (
+                <Segment>
+                  {this.props.plants.results.map((plant, index) => (
+                    <Card key={`plant-${index}`}>
+                      <Card.Content>
+                        <Card.Header>
+                          <Link
+                            to={`/failures/${plant.id}`}
+                            style={{
+                              display: "inline-block",
+                              cursor: "pointer",
+                              color:
+                                this.props.match.params.id == plant.id
+                                  ? "#4183c4"
+                                  : ""
+                            }}
+                          >
+                            {plant.name ? plant.name : "Recordings"}
+                            {plant.date ? ` - ${plant.commissioning_date}` : ""}
+                          </Link>
+                          <div
+                            style={{ float: "right", display: "inline-block" }}
+                          >
+                            <div style={{ marginBottom: "10px" }}>
+                              <Icon
+                                link
+                                name="edit"
+                                color="orange"
+                                onClick={() =>
+                                  this.props.setCurrentPlant(plant)
+                                }
+                              />
+                            </div>
+                            <div>
+                              <Icon
+                                link
+                                name="remove"
+                                color="red"
+                                onClick={() => this.deletePlant(plant)}
+                              />
+                            </div>
+                            <div />
+                          </div>
+                        </Card.Header>
+                      </Card.Content>
+                    </Card>
+                  ))}
+                </Segment>
+              )}
+            </Segment.Group>
+          )}
         </Grid.Column>
         <Grid.Column width={12} />
       </Grid>

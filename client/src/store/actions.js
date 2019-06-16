@@ -66,3 +66,28 @@ export const setCurrentPlant = plant => ({
   type: types.SET_CURRENT_PLANT,
   plant
 });
+
+export const setCurrentFailurePlant = plant => ({
+  type: types.SET_CURRENT_FAILURES_PLANT,
+  plant
+});
+
+export const setFailures = failures => ({
+  type: types.SET_FAILURES,
+  failures
+});
+
+export const addFailure = failure => ({
+  type: types.ADD_FAILURE,
+  failure
+});
+
+export const removeFailure = failure => ({
+  type: types.REMOVE_FAILURE,
+  failure
+});
+
+export const setCurrentFailure = failure => ({
+  type: types.SET_CURRENT_FAILURE,
+  failure
+});

@@ -20,7 +20,10 @@ const Navbar = props => {
         &nbsp;&nbsp;&nbsp;Home
       </Menu.Item> */}
       <Menu.Menu position="right">
-        <Menu.Item onClick={props.logout}>Logout</Menu.Item>
+        <Menu.Item onClick={props.logout}>
+          <Icon name="sign out" />
+          Sign out
+        </Menu.Item>
       </Menu.Menu>
     </Menu>
   );
