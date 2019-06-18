@@ -11,14 +11,10 @@ const Navbar = props => {
         <Icon name="calculator" />
         &nbsp;&nbsp;&nbsp;Measurements
       </Menu.Item>
-      <Menu.Item icon as={NavLink} to="/failures" exact>
+      <Menu.Item icon as={NavLink} to="/failures">
         <Icon name="exclamation triangle" />
         &nbsp;&nbsp;&nbsp;Failures
       </Menu.Item>
-      {/* <Menu.Item name="test" icon as={NavLink} to="/" exact>
-        <Icon name="home" />
-        &nbsp;&nbsp;&nbsp;Home
-      </Menu.Item> */}
       <Menu.Menu position="right">
         <Menu.Item onClick={props.logout}>
           <Icon name="sign out" />
