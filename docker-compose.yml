@@ -10,7 +10,7 @@ services:
     ports:
       - 4000:3000
     volumes:
-      - ./client:/app
+      - ./client/src:/app/src
   recordings_server:
     container_name: "pvmeasure_recordings_server"
     build:
