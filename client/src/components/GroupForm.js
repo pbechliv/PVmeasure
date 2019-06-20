@@ -35,7 +35,7 @@ class GroupForm extends React.Component {
   validate(values, actions) {
     let errors = {};
     if (!values.name) {
-      errors.name = "This field may not be blank.";
+      errors.name = "This field may not be blank";
     }
     return errors;
   }

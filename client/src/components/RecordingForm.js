@@ -42,7 +42,7 @@ class RecordingForm extends React.Component {
       measurements: values.measurements.map(i => "")
     };
     if (!values.measuring_point) {
-      errors.measuring_point = "This field may not be blank.";
+      errors.measuring_point = "This field may not be blank";
     }
     values.measurements.forEach((mr, index) => {
       if (!mr.type && !!mr.value && !!mr.unit) {

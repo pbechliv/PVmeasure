@@ -47,7 +47,10 @@ class FailureForm extends React.Component {
       errors.failure = "Please select the type of failure";
     }
     if (!values.percentage) {
-      errors.percentage = "This field may not be blank.";
+      errors.percentage = "This field may not be blank";
+    }
+    if (Number(values.percentage) < 0 || Number(values.percentage) > 100) {
+      errors.percentage = "Value must be between 0 and 100";
     }
     return errors;
   }

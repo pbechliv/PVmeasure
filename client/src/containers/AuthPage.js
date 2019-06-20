@@ -17,10 +17,10 @@ class AuthPage extends Component {
   validate(values, actions) {
     let errors = {};
     if (!values.username) {
-      errors.username = "This field may not be blank.";
+      errors.username = "This field may not be blank";
     }
     if (!values.password) {
-      errors.password = "This field may not be blank.";
+      errors.password = "This field may not be blank";
     }
     return errors;
   }

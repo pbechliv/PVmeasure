@@ -38,22 +38,36 @@ class PlantForm extends React.Component {
   validate(values, actions) {
     let errors = {};
     if (!values.name) {
-      errors.name = "This field may not be blank.";
+      errors.name = "This field may not be blank";
     }
     if (!values.commissioning_date) {
-      errors.commissioning_date = "This field may not be blank.";
+      errors.commissioning_date = "This field may not be blank";
     }
     if (!values.nominal_power) {
-      errors.nominal_power = "This field may not be blank.";
+      errors.nominal_power = "This field may not be blank";
     }
     if (!values.feed_in_tariff) {
-      errors.feed_in_tariff = "This field may not be blank.";
+      errors.feed_in_tariff = "This field may not be blank";
+    }
+    if (
+      Number(values.feed_in_tariff) > 1 ||
+      Number(values.feed_in_tariff) < 0
+    ) {
+      errors.feed_in_tariff = "Value must be between 0 and 1";
     }
     if (!values.longitude) {
-      errors.longitude = "This field may not be blank.";
+      errors.longitude = "This field may not be blank";
     }
     if (!values.latitude) {
-      errors.latitude = "This field may not be blank.";
+      errors.latitude = "This field may not be blank";
+    }
+    const regex = /^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}/;
+    if (!regex.test(values.longitude)) {
+      errors.longitude =
+        "Longitude format is wrong, please use WGS84, eg. 30.30";
+    }
+    if (!regex.test(values.latitude)) {
+      errors.latitude = "Latitude format is wrong, please use WGS84, eg. 30.30";
     }
     return errors;
   }
