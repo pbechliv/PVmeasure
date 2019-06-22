@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Grid, Icon, Table } from "semantic-ui-react";
+import { Grid, Icon, Table, Card } from "semantic-ui-react";
 import { toastr } from "react-redux-toastr";
 import RecordingForm from "../components/RecordingForm";
 import { setFetchHeaders } from "../lib";
@@ -70,7 +70,11 @@ class RecordingsListPage extends React.Component {
     return (
       <Grid stackable>
         <Grid.Column width={10}>
-          <RecordingForm />
+          <Card fluid>
+            <Card.Content>
+              <RecordingForm />
+            </Card.Content>
+          </Card>
         </Grid.Column>
         <Grid.Column width={6}>
           {this.props.recordings.results.map((recording, index) => (

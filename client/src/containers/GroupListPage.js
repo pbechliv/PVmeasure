@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { toastr } from "react-redux-toastr";
 import GroupForm from "../components/GroupForm";
-import { Segment, Header, Grid, Card, Icon } from "semantic-ui-react";
+import { Segment, Header, Grid, Card } from "semantic-ui-react";
 import { setFetchHeaders } from "../lib";
 import { SERVER1_URL } from "..";
 import * as actions from "../store/actions";

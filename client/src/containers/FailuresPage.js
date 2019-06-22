@@ -259,9 +259,13 @@ class FailuresPage extends React.Component {
                           }
                         >
                           <p>
-                            ecfl = (Plant nominal power * Feed-In tariff *
-                            Plant's annual energy yield * 0.99 ^ years of
-                            activity * percentage of failure) / (10 ^2)
+                            ecfl = plant nominal power
+                            <br />
+                            &times; feed-in tariff <br />
+                            &times; plant's annual energy yield <br />
+                            &times; 0.99<sup>years of activity</sup> <br />
+                            &times; percentage of failure <br />
+                            &times; 10<sup>-2</sup>
                           </p>
                         </Popup>
                       </Card.Description>
