@@ -20,7 +20,7 @@ services:
     container_name: "failures_server"
     restart: always
     volumes:
-      - "media_vol:/home/docker/notes/media"
+      - "media_vol:/home/docker/PVmeasure/notes/media"
     environment:
       # Read by nginx-gen container
       # Can use multiple subdomains. Example: "host1.domain.com,host2.domain.com"

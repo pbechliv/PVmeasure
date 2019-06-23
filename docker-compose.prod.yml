@@ -40,7 +40,7 @@ services:
 
     restart: always
     volumes:
-      - "media_vol:/home/docker/recordings_server/media"
+      - "media_vol:/home/docker/PVmeasure/recordings_server/media"
     environment:
       # Read by nginx-gen container
       # Can use multiple subdomains. Example: "host1.domain.com,host2.domain.com"
@@ -67,7 +67,7 @@ services:
 
     restart: always
     volumes:
-      - "media_vol:/home/docker/failures_server/media"
+      - "media_vol:/home/docker/PVmeasure/failures_server/media"
     environment:
       # Read by nginx-gen container
       # Can use multiple subdomains. Example: "host1.domain.com,host2.domain.com"
