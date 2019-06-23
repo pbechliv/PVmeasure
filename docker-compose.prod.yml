@@ -39,8 +39,6 @@ services:
       dockerfile: Dockerfile
 
     restart: always
-    volumes:
-      - "media_vol:/home/docker/PVmeasure/recordings_server/media"
     environment:
       # Read by nginx-gen container
       # Can use multiple subdomains. Example: "host1.domain.com,host2.domain.com"
@@ -66,8 +64,6 @@ services:
       dockerfile: Dockerfile
 
     restart: always
-    volumes:
-      - "media_vol:/home/docker/PVmeasure/failures_server/media"
     environment:
       # Read by nginx-gen container
       # Can use multiple subdomains. Example: "host1.domain.com,host2.domain.com"
@@ -95,8 +91,4 @@ networks:
 
 volumes:
   db_data:
-    driver: local
-  recordings_media:
-    driver: local
-  failures_media:
     driver: local
