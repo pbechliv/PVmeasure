@@ -40,6 +40,7 @@ RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 COPY ./docker_configs/nginx_app.conf /etc/nginx/sites-available/default
 COPY ./docker_configs/supervisor-app.conf /etc/supervisor/conf.d/
 
+COPY ./requirements.txt /home/docker/PVmeasure/recordings_server/requirements.txt
 RUN pip3 install -r /home/docker/PVmeasure/recordings_server/requirements.txt
 
 COPY . /home/docker/PVmeasure/recordings_server/
