@@ -37,7 +37,7 @@ RUN pip3 install uwsgi
 
 # setup all the configfiles
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
-COPY ./failures_server/docker_configs/nginx-app.conf /etc/nginx/sites-available/default
+COPY ./failures_server/docker_configs/nginx_app.conf /etc/nginx/sites-available/default
 COPY ./failures_server/docker_configs/supervisor-app.conf /etc/supervisor/conf.d/
 
 RUN pip3 install -r /home/docker/PVmeasure/failures_server/requirements.txt
