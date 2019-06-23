@@ -12,8 +12,14 @@ import { readAuthToken } from "./auth/authActions";
 import "semantic-ui-css/semantic.min.css";
 import "./style.css";
 
-export const SERVER1_URL = `http://${window.location.hostname}:8001`;
-export const SERVER2_URL = `http://${window.location.hostname}:8002`;
+export const SERVER1_URL =
+  process.env.NODE_ENV === "development"
+    ? `http://${window.location.hostname}:8001`
+    : `recordings.pvmeasure.com`;
+export const SERVER2_URL =
+  process.env.NODE_ENV === "development"
+    ? `http://${window.location.hostname}:8002`
+    : `failures.pvmeasure.com`;
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
