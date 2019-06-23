@@ -7,7 +7,7 @@ services:
     restart: always
     build:
       context: ./client
-      dockerfile: Dockerfile
+      dockerfile: prod.Dockerfile
     environment:
       # Read by nginx-gen container
       # Can use multiple subdomains. Example: "host1.domain.com,host2.domain.com"
@@ -36,7 +36,7 @@ services:
     container_name: "recordings_server"
     build:
       context: ./recordings_server
-      dockerfile: Dockerfile
+      dockerfile: prod.Dockerfile
 
     restart: always
     environment:
@@ -61,7 +61,7 @@ services:
     container_name: "failures_server"
     build:
       context: ./failures_server
-      dockerfile: Dockerfile
+      dockerfile: prod.Dockerfile
 
     restart: always
     environment:
