@@ -11,11 +11,11 @@ services:
     environment:
       # Read by nginx-gen container
       # Can use multiple subdomains. Example: "host1.domain.com,host2.domain.com"
-      - VIRTUAL_HOST=pvmeasure.com,www.pvmeasure.com
+      - VIRTUAL_HOST=pbechliv.dev,www.pbechliv.dev
 
       # Read by letsencrypt-nginx-proxy-companion container
       # Can use multiple subdomains. Example: "host1.domain.com,host2.domain.com"
-      - LETSENCRYPT_HOST=pvmeasure.com,www.pvmeasure.com
+      - LETSENCRYPT_HOST=pbechliv.dev,www.pbechliv.dev
       - LETSENCRYPT_EMAIL=panos.bechlivanos@gmail.com
     networks:
       - webproxy
@@ -42,14 +42,14 @@ services:
     environment:
       # Read by nginx-gen container
       # Can use multiple subdomains. Example: "host1.domain.com,host2.domain.com"
-      - VIRTUAL_HOST=recordings.pvmeasure.com
+      - VIRTUAL_HOST=recordings.pbechliv.dev
       #      - VIRTUAL_NETWORK=webproxy
       #      - VIRTUAL_PORT=80
       #      - VIRTUAL_PROTO=http
 
       # Read by letsencrypt-nginx-proxy-companion container
       # Can use multiple subdomains. Example: "host1.domain.com,host2.domain.com"
-      - LETSENCRYPT_HOST=recordings.pvmeasure.com
+      - LETSENCRYPT_HOST=recordings.pbechliv.dev
       - LETSENCRYPT_EMAIL=panos.bechlivanos@gmail.com
     networks:
       - db
@@ -67,14 +67,14 @@ services:
     environment:
       # Read by nginx-gen container
       # Can use multiple subdomains. Example: "host1.domain.com,host2.domain.com"
-      - VIRTUAL_HOST=failures.pvmeasure.com
+      - VIRTUAL_HOST=failures.pbechliv.dev
       #      - VIRTUAL_NETWORK=webproxy
       #      - VIRTUAL_PORT=80
       #      - VIRTUAL_PROTO=http
 
       # Read by letsencrypt-nginx-proxy-companion container
       # Can use multiple subdomains. Example: "host1.domain.com,host2.domain.com"
-      - LETSENCRYPT_HOST=failures.pvmeasure.com
+      - LETSENCRYPT_HOST=failures.pbechliv.dev
       - LETSENCRYPT_EMAIL=panos.bechlivanos@gmail.com
     networks:
       - db
