@@ -15,11 +15,11 @@ import "./style.css";
 export const SERVER1_URL =
   process.env.NODE_ENV === "development"
     ? `http://${window.location.hostname}:8001`
-    : `https://recordings.pvmeasure.com`;
+    : `https://recordings.pbechliv.dev`;
 export const SERVER2_URL =
   process.env.NODE_ENV === "development"
     ? `http://${window.location.hostname}:8002`
-    : `https://failures.pvmeasure.com`;
+    : `https://failures.pbechliv.dev`;
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
