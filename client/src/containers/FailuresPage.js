@@ -108,7 +108,7 @@ class FailuresPage extends React.Component {
   }
 
   getPlantById(id) {
-    return this.props.plants.results.find(p => p.id == id);
+    return this.props.plants.results.find(p => p.id == id); //eslint-disable-line
   }
 
   render() {
@@ -175,7 +175,7 @@ class FailuresPage extends React.Component {
                               display: "inline-block",
                               cursor: "pointer",
                               color:
-                                this.props.match.params.id == plant.id
+                                this.props.match.params.id == plant.id //eslint-disable-line
                                   ? "#4183c4"
                                   : ""
                             }}

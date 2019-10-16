@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Segment, Grid, Divider } from "semantic-ui-react";
+import { Segment, Grid } from "semantic-ui-react";
 import { startAnim } from "../auth/esaAnimation";
 import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
