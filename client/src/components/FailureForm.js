@@ -7,7 +7,7 @@ import { toastr } from "react-redux-toastr";
 import * as actions from "../store/actions";
 import { setFetchHeaders } from "../lib";
 import { SERVER2_URL } from "..";
-import { failureOptions } from "../catalogue/failures2";
+import { failureOptions } from "../catalogue/failures";
 
 class FailureForm extends React.Component {
   state = {

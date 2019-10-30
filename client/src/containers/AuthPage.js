@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Segment, Grid } from "semantic-ui-react";
-import { startAnim } from "../auth/esaAnimation";
+import { startAnim } from "../auth/myAnimation";
 import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
 
