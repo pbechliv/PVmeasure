@@ -52,12 +52,12 @@ class RecordingsListPage extends React.Component {
         const headers = setFetchHeaders("DELETE");
         try {
           const response = await fetch(
-            `${SERVER1_URL}/measurement_groups/${recording.id}/`,
+            `${SERVER1_URL}/recordings/${recording.id}/`,
             headers
           );
           if (response.ok) {
             toastr.warning(`The recording has been successfully deleted...`);
-            this.props.removeGroup(recording);
+            this.props.removeRecording(recording);
           }
         } catch (e) {
           console.log(e);

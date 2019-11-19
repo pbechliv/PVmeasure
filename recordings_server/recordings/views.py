@@ -37,7 +37,7 @@ class MeasurementRecordingViewSet(ModelViewSet):
 
         group = self.request.GET.get("group", None)
 
-        if self.request.user.is_anonymous:
+        if self.request.user.is_anonymous or group is None:
             queryset = MeasurementRecording.objects.all().order_by("-created")
         else:
             queryset = MeasurementRecording.objects.filter(group=group).order_by(
